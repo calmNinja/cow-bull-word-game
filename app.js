@@ -14,11 +14,13 @@ const beginBtn = document.querySelector(".begin-button");
 // function to open the modal
 function openModal() {
   modal.classList.add("open");
+  document.body.style.overflow = "hidden";
 }
 
 // function to close the modal
 function closeModal() {
   modal.classList.remove("open");
+  document.body.style.overflow = "auto";
 }
 
 playBtn.addEventListener("click", openModal);
