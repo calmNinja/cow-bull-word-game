@@ -152,33 +152,99 @@ body {
   background-color: darkgreen;
 }
 
-/* temporary */
-/* .modal {
-  display: none;
+/* Modal Styling begins */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4); 
 }
 
+.modal-dialog {
+  background-color: #e27396;
+  color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #fefefe;
+}
+
+.close-modal-button {
+  font-size: 40px;
+  font-weight: bold;
+  border: none;
+  background: none;
+  color: black;
+  cursor: pointer;
+}
+
+.close-modal-button:hover,
+.close-modal-button:focus {
+  color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-body select {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd;
+  padding: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-footer .begin-button {
+  padding: 1rem;
+  border: none;
+  border-radius: 20px;
+}
+.modal-footer .begin-button:hover {
+  background-color: #ff477e;
+  color:#fefefe;
+  cursor: pointer;
+ 
+}
+.modal.open {
+  display: block;
+}
+
+/* Modal styling ends */
+/*
 footer {
   display: none;
 } */
 
 /* Media queries */
-/* Media queries for tablet screens */
-/* @media only screen and (max-width: 1024px) {
-  body{
-    background-color: purple;
-  }
- 
-  .rules-container {
-    width: 90%;
-  }
-  .rules-container ul {
-    padding: 1rem;
-  }
-  .rules-container li {
-    font-size: 1.3rem;
-    line-height: 2.5rem;
-  }
-} */
 
 @media only screen and (max-width: 1024px) {
   body {
@@ -218,9 +284,7 @@ footer {
 
 /* Media queries for mobile screens */
 @media only screen and (max-width: 768px) {
-  body {
-    /* background-color: blue; */
-  }
+
   .header-container {
     margin: 0 1rem 1rem;
     padding: 2rem;
