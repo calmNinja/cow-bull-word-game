@@ -1,4 +1,40 @@
+// Title animation script
 const cowAnimate = document.querySelector(".cow-animate");
 cowAnimate.addEventListener("animationend", function () {
   this.classList.add("done");
+});
+
+// Game Options modal script
+const playBtn = document.querySelector(".start-button");
+const modal = document.querySelector(".modal");
+const closeModalBtn = document.querySelector(".close-modal-button");
+const modalDialog = document.querySelector(".modal-dialog");
+const beginBtn = document.querySelector(".begin-button");
+
+// function to open the modal
+function openModal() {
+  modal.classList.add("open");
+}
+
+// function to close the modal
+function closeModal() {
+  modal.classList.remove("open");
+}
+
+playBtn.addEventListener("click", openModal);
+
+closeModalBtn.addEventListener("click", closeModal);
+
+beginBtn.addEventListener("click", closeModal);
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+});
+
+window.addEventListener("click", function (event) {
+  if (event.target === modal) {
+    closeModal();
+  }
 });
