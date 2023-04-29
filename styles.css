@@ -5,6 +5,7 @@
 }
 
 body {
+  height: 100vh;
   font-family: Arial, sans-serif;
   background-color: #b7e4c7;
   color:rgb(237, 233, 233);
@@ -152,10 +153,145 @@ body {
 }
 
 /* temporary */
-.modal {
+/* .modal {
   display: none;
 }
 
 footer {
   display: none;
+} */
+
+/* Media queries */
+/* Media queries for tablet screens */
+/* @media only screen and (max-width: 1024px) {
+  body{
+    background-color: purple;
+  }
+ 
+  .rules-container {
+    width: 90%;
+  }
+  .rules-container ul {
+    padding: 1rem;
+  }
+  .rules-container li {
+    font-size: 1.3rem;
+    line-height: 2.5rem;
+  }
+} */
+
+@media only screen and (max-width: 1024px) {
+  body {
+    /* background-color: purple; */
+    height: 100vh;
+    width: 100vw;
+    padding: 2rem 2rem 0 2rem;
+  }
+  
+  .header-container {
+    margin: 1.5rem 0 1rem;
+    padding: 4rem;
+  }
+
+  .rules-container {
+    width: 100%;
+    padding: 3rem 2rem 2rem;
+    margin-top: 3rem;
+  }
+  .rules-container h3 {
+    margin-top:0.25rem;
+  }
+  .rules-container ul {
+    padding: 2rem 1rem;
+  }
+  .rules-container li {
+    font-size: 2rem;
+    line-height: 3.25rem;
+  }
+
+  .start-button {
+    margin: 4rem auto 6rem;
+  }
+
 }
+
+
+/* Media queries for mobile screens */
+@media only screen and (max-width: 768px) {
+  body {
+    /* background-color: blue; */
+  }
+  .header-container {
+    margin: 0 1rem 1rem;
+    padding: 2rem;
+  }
+  .title {
+    font-size: 3em;
+  }
+  .subtitle {
+    font-size: 1.5em;
+  }
+  .rules-container {
+    width: 100%;
+    padding: 3rem;
+  }
+  .rules-container h3 {
+    font-size: 3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-top: 0;
+  }
+  .rules-container ul {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+  .rules-container li {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+  .start-button {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+/* Media queries for small mobile screens */
+@media only screen and (max-width: 480px) {
+  body {
+    /* background-color: palevioletred; */
+    padding: 0;
+    
+  }
+  .header-container {
+    margin: 2rem 0;
+    padding: 1rem 0.5rem;
+    border-radius: 0;
+  }
+ 
+  .title {
+    font-size: 2.5em;
+  }
+  .subtitle {
+    font-size: 1.2em;
+  }
+  .rules-container {
+    padding: 1rem 0.75rem;
+    border-radius: 0;
+  }
+  .rules-container h3 {
+    font-size: 2rem;
+  }
+  .rules-container ul {
+    font-size: 1rem;
+  }
+  .rules-container li {
+    font-size: 1rem;
+    line-height: 1.85rem;
+  }
+  .start-button {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
