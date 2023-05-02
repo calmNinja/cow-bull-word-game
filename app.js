@@ -40,3 +40,8 @@ window.addEventListener("click", function (event) {
     closeModal();
   }
 });
+
+// Game begins
+beginBtn.addEventListener("click", () => {
+  window.location.href = "game.html";
+});

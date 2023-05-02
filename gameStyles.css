@@ -1,0 +1,42 @@
+/* Common styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #b7e4c7;
+    color:rgb(237, 233, 233);
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+  
+  /* Header Styles */
+  .header-container {
+    background-color:#52b788 ;
+    border-radius: 1rem;
+    color: rgb(237, 233, 233);
+    padding: 1.25em;
+    text-align: center;
+    margin: 0 2rem 2rem;
+  }
+  
+  .title {
+    display: inline-block;
+    font-size: 4em;
+    font-weight: bold;
+    color: darkgreen;
+    animation: roll-in 2s ease-out;
+    animation-fill-mode: forwards;
+  } 
+
+  .subtitle {
+    font-size: 2em;
+    font-weight: normal;
+  }
+
+  
