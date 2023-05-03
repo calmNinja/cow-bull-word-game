@@ -43,5 +43,12 @@ window.addEventListener("click", function (event) {
 
 // Game begins
 beginBtn.addEventListener("click", () => {
-  window.location.href = "game.html";
+  //Get the Game Option values
+  const wordLengthSelect = document.querySelector("#word-length");
+  const difficultySelect = document.querySelector("#difficulty");
+  const wordLength = encodeURIComponent(wordLengthSelect.value);
+  const difficulty = encodeURIComponent(difficultySelect.value);
+  const url =
+    "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty;
+  window.location.href = url;
 });
