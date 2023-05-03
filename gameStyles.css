@@ -39,4 +39,11 @@
     font-weight: normal;
   }
 
-  
+  /* Game Options styling */
+
+  /* temp styling */
+  .option-length, .option-level {
+    color: darkgreen;
+    font-weight: bolder;
+    font-size: 2rem;
+  }
