@@ -40,3 +40,81 @@
   }
 
 /* Reference Container styling */
+.reference-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: darkgreen;
+  font-weight: bold;
+  align-items: center;
+  margin: 0 auto;
+  /* max-width: 800px; */
+  padding: 1rem;
+  border-bottom: 1px solid rgba(254, 254, 254, 0.5);
+}
+
+/* Game Options Container */
+.game-options-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.option-length,
+.option-level {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+/* Icons Reference Container */
+.icons-reference-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+.bull-ref,
+.cow-ref {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+.bull-ref span,
+.cow-ref span {
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.bull-ref img,
+.cow-ref img {
+  max-width: 100%;
+}
+
+/* Quick Rules Guide Container */
+.rules-reference-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+#rules-button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    /* background-color: #e27396; */
+    background-color: #ff477e;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+#rules-button a {
+  color: #fefefe;
+}
+#rules-button:hover {
+  background-color: darkgreen;
+}
