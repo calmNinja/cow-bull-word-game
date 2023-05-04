@@ -48,7 +48,21 @@ beginBtn.addEventListener("click", () => {
   const difficultySelect = document.querySelector("#difficulty");
   const wordLength = encodeURIComponent(wordLengthSelect.value);
   const difficulty = encodeURIComponent(difficultySelect.value);
-  const url =
-    "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty;
-  window.location.href = url;
+
+  let guesses;
+  switch (difficulty) {
+    case "Easy":
+      guesses = 12;
+      break;
+    case "Medium":
+      guesses = 10;
+      break;
+    case "Hard":
+      guesses = 8;
+      break;
+  }
+  const gameOptionsUrl = `game.html?wordLength=${wordLength}&difficulty=${difficulty}&guesses=${guesses}`;
+  // const url =
+  //   "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty`;
+  window.location.href = gameOptionsUrl;
 });
