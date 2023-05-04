@@ -39,29 +39,4 @@
     font-weight: normal;
   }
 
-  /* Game Options styling */
-
-  .game-options-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    width: max-content;
-    border: 5px solid red;
-    padding: 1rem;
-  }
-
-  .option-length,
-.option-level {
-  display: flex;
-  flex-direction: row; 
-  align-items: center;
-  color: darkgreen; 
-}
-
-.option-length span,
-.option-level span {
-  font-weight: bold;
-  margin-left: 0.25rem;
-}
-
+/* Reference Container styling */
