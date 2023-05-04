@@ -12,8 +12,10 @@ function displayGameOptions() {
   console.log(wordLength);
   const difficulty = urlParams.get("difficulty");
   console.log(difficulty);
+  const guesses = urlParams.get("guesses");
+  console.log(`guesses: ${guesses}`);
   wordLengthSpan.textContent = `${wordLength} letters`;
-  difficultySpan.textContent = `${difficulty}`;
+  difficultySpan.textContent = `${difficulty} (${guesses} guesses)`;
 }
 displayGameOptions();
 
