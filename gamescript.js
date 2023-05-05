@@ -4,38 +4,34 @@ const difficultySpan = document.querySelector("#option-level");
 const wordLengthSelect = document.querySelector("#word-length");
 const difficultySelect = document.querySelector("#difficulty");
 
+//Parse the URL to ger params
+const urlParams = new URLSearchParams(window.location.search);
+const wordLength = urlParams.get("wordLength");
+const difficulty = urlParams.get("difficulty");
+
+const guesses = urlParams.get("guesses");
 function displayGameOptions() {
-  //Parse the URL to ger params
-  const urlParams = new URLSearchParams(window.location.search);
-  console.log(urlParams);
-  const wordLength = urlParams.get("wordLength");
-  console.log(wordLength);
-  const difficulty = urlParams.get("difficulty");
-  console.log(difficulty);
-  const guesses = urlParams.get("guesses");
-  console.log(`guesses: ${guesses}`);
   wordLengthSpan.textContent = `${wordLength} letters`;
   difficultySpan.textContent = `${difficulty} (${guesses} guesses)`;
 }
 displayGameOptions();
 
-// Function to update game options
-// function updateGameOptions() {
-//   // Update word length
-//   wordLengthSpan.textContent = `${wordLengthSelect.value} letters`;
+// Generate the word guessing grid
+const tilesGrid = document.createElement("div");
+tilesGrid.classList.add("tiles-grid");
 
-//   // Update difficulty
-//   switch (difficultySelect.value) {
-//     case "easy":
-//       difficultySpan.textContent = "Easy (12 guesses)";
-//       break;
-//     case "medium":
-//       difficultySpan.textContent = "Medium (10 guesses)";
-//       break;
-//     case "hard":
-//       difficultySpan.textContent = "Hard (8 guesses)";
-//       break;
-//     default:
-//       difficultySpan.textContent = "";
-//   }
-// }
+for (let i = 0; i < guesses; i++) {
+  const tileRow = document.createElement("div");
+  tileRow.classList.add("tile-row");
+  tilesGrid.appendChild(tileRow);
+
+  for (let j = 0; j < wordLength; j++) {
+    const tile = document.createElement("div");
+    tile.classList.add("tile");
+    tileRow.appendChild(tile);
+  }
+}
+
+// Add the tiles grid to the game container
+const gameContainer = document.querySelector(".game-container");
+gameContainer.appendChild(tilesGrid);
