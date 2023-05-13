@@ -123,10 +123,11 @@
 
 .game-container { 
   display: flex;
-   border: 1px solid red; 
+   border: 1px solid darkgreen; 
    max-width: 50%;
-   margin: 0 auto;
+   margin: 2rem auto;
    justify-content: flex-start;
+   /* border-bottom:1px solid rgba(254, 254, 254, 0.5); ; */
 
 }
 .tiles-grid {
@@ -150,7 +151,8 @@
   width: 2rem;
   height: 2rem;
   margin: 0.5rem;
-  border: 1px solid black;
+  border: 1px solid darkgreen;
+  border-radius: 5px;
   background-color: white;
   font-size: 1.5rem;
   display: flex;
@@ -159,3 +161,6 @@
   text-transform: uppercase;
   font-weight: bold;
 }
+
+
+
