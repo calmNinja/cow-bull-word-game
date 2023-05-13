@@ -17,7 +17,7 @@ function displayGameOptions() {
 displayGameOptions();
 
 // Generate the word guessing grid
-const gameContainer = document.querySelector(".game-container");
+const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
 
 for (let i = 0; i < guesses; i++) {
