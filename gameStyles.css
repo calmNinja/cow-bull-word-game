@@ -7,27 +7,28 @@
   }
   
   body {
-    height: 100vh;
+    max-height: 70vh;
     font-family: Arial, sans-serif;
     background-color: #b7e4c7;
     color:rgb(237, 233, 233);
-    padding: 1rem;
+    padding: 0 1rem;
     overflow-x: hidden;
   }
-  
+
+ 
   /* Header Styles */
   .header-container {
     background-color:#52b788 ;
     border-radius: 1rem;
     color: rgb(237, 233, 233);
-    padding: 1.25em;
+    padding: 0.5em 0.75em;
     text-align: center;
-    margin: 0 2rem 2rem;
+    margin: 0 2rem;
   }
   
   .title {
     display: inline-block;
-    font-size: 4em;
+    font-size: 3em;
     font-weight: bold;
     color: darkgreen;
     animation: roll-in 2s ease-out;
@@ -35,9 +36,10 @@
   } 
 
   .subtitle {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: normal;
   }
+  
 
 /* Reference Container styling */
 .reference-container {
@@ -49,7 +51,7 @@
   align-items: center;
   margin: 0 auto;
   /* max-width: 800px; */
-  padding: 1rem;
+  padding: 0.5rem 0.5rem 0;
   border-bottom: 1px solid rgba(254, 254, 254, 0.5);
 }
 
@@ -119,11 +121,22 @@
   background-color: darkgreen;
 }
 
+/* Scrollable Content Container */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  height: 50vh;
+  flex-grow: 1;
+  overflow: auto; 
+}
+
 /* Game container - Guessing Grid */
 
-#game-container { 
-  display: flex;
-   /* border: 1px solid darkgreen;  */
+#game-container {  
+   display: flex;
+   border: 1px solid black; 
+   background-color: #d3d3d3;
    max-width: 50%;
    margin: 0 auto;
    justify-content: flex-start;
