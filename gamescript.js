@@ -17,54 +17,23 @@ function displayGameOptions() {
 displayGameOptions();
 
 // Generate the word guessing grid
-// const tilesGrid = document.createElement("div");
-// tilesGrid.classList.add("tiles-grid");
+const gameContainer = document.querySelector(".game-container");
+const tilesGrid = document.querySelector(".tiles-grid");
 
-// for (let i = 0; i < guesses; i++) {
-//   const tileRow = document.createElement("div");
-//   tileRow.classList.add("tile-row");
-//   tilesGrid.appendChild(tileRow);
+for (let i = 0; i < guesses; i++) {
+  //Create a tile row
+  const tileRow = document.createElement("div");
+  tileRow.classList.add("tile-row");
+  //Create tiles
+  for (let j = 0; j < wordLength; j++) {
+    const tile = document.createElement("div");
+    tile.classList.add("tile");
+    tile.setAttribute("id", `tile-${i}-${j}`);
+    tileRow.appendChild(tile);
+  }
+  //Append tile Rows to the Tile Grid
+  tilesGrid.appendChild(tileRow);
+}
 
-//   for (let j = 0; j < wordLength; j++) {
-//     const tile = document.createElement("div");
-//     tile.classList.add("tile");
-//     tileRow.appendChild(tile);
-//   }
-// }
-
-// Second attempt
-// let currentRow = 1; // Current row of tiles
-
-// // Add the first row of tiles to the tiles grid
-// const tilesGrid = document.querySelector(".tiles-grid");
-// addRowOfTiles();
-
-// // Add an event listener to the "Guess" button
-// const guessBtn = document.querySelector("#guess-btn");
-// guessBtn.addEventListener("click", () => {
-//   if (currentRow < guesses) {
-//     currentRow++;
-//     addRowOfTiles();
-//   }
-// });
-
-// // Function to add a row of tiles to the tiles grid
-// function addRowOfTiles() {
-//   const tileRow = document.createElement("div");
-//   tileRow.classList.add("tile-row");
-//   tilesGrid.appendChild(tileRow);
-
-//   for (let j = 0; j < wordLength; j++) {
-//     const tile = document.createElement("div");
-//     tile.classList.add("tile");
-//     tileRow.appendChild(tile);
-//   }
-
-//   if (currentRow === guesses) {
-//     guessBtn.style.display = "none";
-//   }
-// }
-
-// // Add the tiles grid to the game container
-// const gameContainer = document.querySelector(".game-container");
-// gameContainer.appendChild(tilesGrid);
+//Append Tiles Grid to the Game Container
+gameContainer.appendChild(tilesGrid);
