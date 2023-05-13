@@ -121,11 +121,11 @@
 
 /* Game container - Guessing Grid */
 
-.game-container { 
+#game-container { 
   display: flex;
-   border: 1px solid darkgreen; 
+   /* border: 1px solid darkgreen;  */
    max-width: 50%;
-   margin: 2rem auto;
+   margin: 0 auto;
    justify-content: flex-start;
    /* border-bottom:1px solid rgba(254, 254, 254, 0.5); ; */
 
@@ -148,8 +148,8 @@
 
 /* Styles for each individual tile */
 .tile {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin: 0.5rem;
   border: 1px solid darkgreen;
   border-radius: 5px;
@@ -162,5 +162,47 @@
   font-weight: bold;
 }
 
+/* Keyboard Styling */
+#keyboard-container {
+  max-width: 40rem;
+  margin: 0 auto;
+}
 
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  width: 100%; 
+  margin: 0 auto 0.5rem;
+  touch-action: manipulation;
+}
+
+.keyboard-row button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1rem;
+  border: 0;
+  padding: 0;
+  height: 3.5rem;
+  cursor: pointer;
+  background-color: #52b788;
+  color: #fefefe;
+  flex-grow: 1;
+  text-transform: uppercase;
+  margin-right: 0.375rem;
+  border-radius: 0.25rem;
+  user-select: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.keyboard-row button:hover {
+  transform: scale(1.1);
+}
+
+.keyboard-row button.wide-button {
+  flex-grow: 1.5;
+  background-color: rgb(233, 31, 65);
+}
+.keyboard-row .spacer-half {
+  flex-grow:0.5;
+}
 
