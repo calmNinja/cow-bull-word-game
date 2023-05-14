@@ -134,6 +134,8 @@ const checkGuess = () => {
       isGameOver = true;
       return;
     } else {
+      const cowBulls = getCowBulls(guess);
+      showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
       if (state.currentRow >= guesses - 1) {
         isGameOver = true;
         showMessage("Game Over!");
@@ -145,6 +147,20 @@ const checkGuess = () => {
       }
     }
   }
+};
+
+//Game logic
+const getCowBulls = (guess) => {
+  let cows = 0;
+  let bulls = 0;
+  for (let i = 0; i < wordLength; i++) {
+    if (guess[i] === secret[i]) {
+      bulls++;
+    } else if (secret.includes(guess[i])) {
+      cows++;
+    }
+  }
+  return { cows, bulls };
 };
 
 const messageDisplay = document.querySelector(".message-container");
