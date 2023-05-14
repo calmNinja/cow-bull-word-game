@@ -219,3 +219,8 @@
   flex-grow:0.5;
 }
 
+/* temporary message showing */
+.message-container {
+  color: rgb(233, 31, 65);
+  height: 50px;
+}

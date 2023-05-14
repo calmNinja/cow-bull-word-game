@@ -22,6 +22,7 @@ const tilesGrid = document.querySelector(".tiles-grid");
 
 //target word - temporarily hardcoded
 const secret = "nice";
+let isGameOver = false;
 
 // State object
 const state = {
@@ -70,7 +71,8 @@ const handleClick = (event) => {
     return;
   }
   if (letter === "Enter") {
-    console.log("check row");
+    console.log("calling checkGuess function...");
+    checkGuess();
     return;
     // if (state.currentTile === wordLength) {
     // }
@@ -90,6 +92,8 @@ const registerKeyboardEvents = () => {
   document.body.onkeydown = (e) => {
     const key = e.key;
     console.log(`from the keyboard: ${key}`);
+    //Handle different keys for physical keyboard events
+    //yet to be done
   };
 };
 
@@ -118,6 +122,38 @@ const deleteLetter = () => {
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
   }
+};
+
+//Check guessed word
+const checkGuess = () => {
+  const guess = state.grid[state.currentRow].join("");
+  if (state.currentTile > wordLength - 1) {
+    console.log(`guess is : ${guess} and target word is : ${secret}`);
+    if (guess == secret) {
+      showMessage("Congratulations!!");
+      isGameOver = true;
+      return;
+    } else {
+      if (state.currentRow >= guesses - 1) {
+        isGameOver = true;
+        showMessage("Game Over!");
+        return;
+      }
+      if (state.currentRow < guesses) {
+        state.currentRow++;
+        state.currentTile = 0;
+      }
+    }
+  }
+};
+
+const messageDisplay = document.querySelector(".message-container");
+
+const showMessage = (message) => {
+  const messageElement = document.createElement("p");
+  messageElement.textContent = message;
+  messageDisplay.append(messageElement);
+  setTimeout(() => messageDisplay.removeChild(messageElement), 2000);
 };
 
 //Game Start
