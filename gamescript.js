@@ -19,20 +19,37 @@ function displayGameOptions() {
 // Generate the word guessing grid
 const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
+
+// State object
+const state = {
+  grid: [],
+  currentRow: 0,
+  currentCol: 0,
+};
+
 const drawGrid = () => {
   for (let i = 0; i < guesses; i++) {
     //Create a tile row
     const tileRow = document.createElement("div");
     tileRow.classList.add("tile-row");
+    tileRow.setAttribute("id", `tileRow-${i}`);
     //Create tiles
+    const tileRowData = [];
     for (let j = 0; j < wordLength; j++) {
       const tile = document.createElement("div");
       tile.classList.add("tile");
       tile.setAttribute("id", `tile-${i}-${j}`);
       tileRow.appendChild(tile);
+      //Initialize grid with empty values
+      tileRowData.push("");
     }
     //Append tile Rows to the Tile Grid
     tilesGrid.appendChild(tileRow);
+
+    // Add tile row data to the grid state
+    state.grid.push(tileRowData);
+    console.log(tileRowData);
+    console.log(state.grid);
   }
 
   //Append Tiles Grid to the Game Container
