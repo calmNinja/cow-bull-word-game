@@ -20,11 +20,14 @@ function displayGameOptions() {
 const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
 
+//target word - temporarily hardcoded
+const secret = "nice";
+
 // State object
 const state = {
   grid: [],
   currentRow: 0,
-  currentCol: 0,
+  currentTile: 0,
 };
 
 const drawGrid = () => {
@@ -60,6 +63,20 @@ const drawGrid = () => {
 const handleClick = (event) => {
   const letter = event.target.getAttribute("data-key");
   console.log(letter);
+  //Handle different keys
+  if (letter === "Backspace") {
+    deleteLetter();
+    console.log(`state grid: ${state.grid}`);
+    return;
+  }
+  if (letter === "Enter") {
+    console.log("check row");
+    return;
+    // if (state.currentTile === wordLength) {
+    // }
+  }
+  //Finally update the tile with the letter
+  addLetter(letter);
 };
 
 //Selecting keys from keyboard
@@ -74,8 +91,33 @@ const registerKeyboardEvents = () => {
     const key = e.key;
     console.log(`from the keyboard: ${key}`);
   };
-  //Handle different keys
-  //Finally update the tile with the letter
+};
+
+//Add Letter to the Tile
+const addLetter = (letter) => {
+  if (state.currentTile < wordLength && state.currentRow < guesses) {
+    const tile = document.getElementById(
+      `tile-${state.currentRow}-${state.currentTile}`
+    );
+    tile.textContent = letter;
+    state.grid[state.currentRow][state.currentTile] = letter;
+    console.log(`state grid: ${state.grid}`);
+    tile.setAttribute("data", letter); //to check for cow bull later
+    state.currentTile++;
+  }
+};
+
+//Delete Letter from Tile
+const deleteLetter = () => {
+  if (state.currentTile > 0) {
+    state.currentTile--;
+    const tile = document.getElementById(
+      `tile-${state.currentRow}-${state.currentTile}`
+    );
+    tile.textContent = "";
+    state.grid[state.currentRow][state.currentTile] = "";
+    tile.setAttribute("data", ""); //to check for cow bull later
+  }
 };
 
 //Game Start
