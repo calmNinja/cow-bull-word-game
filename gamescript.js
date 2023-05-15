@@ -47,6 +47,17 @@ const drawGrid = () => {
       //Initialize grid with empty values
       tileRowData.push("");
     }
+    //Create Placeholders for cows and bulls
+    const bullsElement = document.createElement("div");
+    bullsElement.classList.add("bulls");
+
+    const cowsElement = document.createElement("div");
+    cowsElement.classList.add("cows");
+
+    //Append placeholders to the Tile Row
+    tileRow.appendChild(bullsElement);
+    tileRow.appendChild(cowsElement);
+
     //Append tile Rows to the Tile Grid
     tilesGrid.appendChild(tileRow);
 
@@ -134,8 +145,6 @@ const checkGuess = () => {
       isGameOver = true;
       return;
     } else {
-      const cowBulls = getCowBulls(guess);
-      showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
       if (state.currentRow >= guesses - 1) {
         isGameOver = true;
         showMessage("Game Over!");
@@ -146,7 +155,38 @@ const checkGuess = () => {
         state.currentTile = 0;
       }
     }
+    const cowBulls = getCowBulls(guess);
+    //display bulls and cows
+    showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
+    displayCowBullImages(cowBulls);
   }
+};
+
+//Display Cow Bull Results as Images
+const displayCowBullImages = (cowBulls) => {
+  const bullsElement = document.querySelector(
+    `#tileRow-${state.currentRow} .bulls`
+  );
+  const cowsElement = document.querySelector(
+    `#tileRow-${state.currentRow} .cows`
+  );
+  //Clear existing content
+  bullsElement.innerHTML = "";
+  cowsElement.innerHTML = "";
+
+  //Append bulls images
+  Array.from({ length: cowBulls.bulls }).forEach(() => {
+    const bullImg = document.createElement("img");
+    bullImg.src = "./bull-icon.png";
+    bullsElement.appendChild(bullImg);
+  });
+
+  //Append cow images
+  Array.from({ length: cowBulls.cows }).forEach(() => {
+    const cowImg = document.createElement("img");
+    cowImg.src = "./cow-icon.png";
+    cowsElement.appendChild(cowImg);
+  });
 };
 
 //Game logic
