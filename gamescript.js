@@ -36,7 +36,8 @@ const drawGrid = () => {
     //Create a tile row
     const tileRow = document.createElement("div");
     tileRow.classList.add("tile-row");
-    tileRow.setAttribute("id", `tileRow-${i}`);
+    // tileRow.setAttribute("id", `tileRow-${i}`);
+    tileRow.setAttribute("id", `tileRow-${i + 1}`);
     //Create tiles
     const tileRowData = [];
     for (let j = 0; j < wordLength; j++) {
@@ -178,6 +179,7 @@ const displayCowBullImages = (cowBulls) => {
   Array.from({ length: cowBulls.bulls }).forEach(() => {
     const bullImg = document.createElement("img");
     bullImg.src = "./bull-icon.png";
+    bullImg.classList.add("bull-image");
     bullsElement.appendChild(bullImg);
   });
 
@@ -185,6 +187,7 @@ const displayCowBullImages = (cowBulls) => {
   Array.from({ length: cowBulls.cows }).forEach(() => {
     const cowImg = document.createElement("img");
     cowImg.src = "./cow-icon.png";
+    cowImg.classList.add("cow-image");
     cowsElement.appendChild(cowImg);
   });
 };
