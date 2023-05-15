@@ -36,7 +36,8 @@ const drawGrid = () => {
     //Create a tile row
     const tileRow = document.createElement("div");
     tileRow.classList.add("tile-row");
-    tileRow.setAttribute("id", `tileRow-${i}`);
+    // tileRow.setAttribute("id", `tileRow-${i}`);
+    tileRow.setAttribute("id", `tileRow-${i + 1}`);
     //Create tiles
     const tileRowData = [];
     for (let j = 0; j < wordLength; j++) {
@@ -47,6 +48,17 @@ const drawGrid = () => {
       //Initialize grid with empty values
       tileRowData.push("");
     }
+    //Create Placeholders for cows and bulls
+    const bullsElement = document.createElement("div");
+    bullsElement.classList.add("bulls");
+
+    const cowsElement = document.createElement("div");
+    cowsElement.classList.add("cows");
+
+    //Append placeholders to the Tile Row
+    tileRow.appendChild(bullsElement);
+    tileRow.appendChild(cowsElement);
+
     //Append tile Rows to the Tile Grid
     tilesGrid.appendChild(tileRow);
 
@@ -144,7 +156,54 @@ const checkGuess = () => {
         state.currentTile = 0;
       }
     }
+    const cowBulls = getCowBulls(guess);
+    //display bulls and cows
+    showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
+    displayCowBullImages(cowBulls);
   }
+};
+
+//Display Cow Bull Results as Images
+const displayCowBullImages = (cowBulls) => {
+  const bullsElement = document.querySelector(
+    `#tileRow-${state.currentRow} .bulls`
+  );
+  const cowsElement = document.querySelector(
+    `#tileRow-${state.currentRow} .cows`
+  );
+  //Clear existing content
+  bullsElement.innerHTML = "";
+  cowsElement.innerHTML = "";
+
+  //Append bulls images
+  Array.from({ length: cowBulls.bulls }).forEach(() => {
+    const bullImg = document.createElement("img");
+    bullImg.src = "./bull-icon.png";
+    bullImg.classList.add("bull-image");
+    bullsElement.appendChild(bullImg);
+  });
+
+  //Append cow images
+  Array.from({ length: cowBulls.cows }).forEach(() => {
+    const cowImg = document.createElement("img");
+    cowImg.src = "./cow-icon.png";
+    cowImg.classList.add("cow-image");
+    cowsElement.appendChild(cowImg);
+  });
+};
+
+//Game logic
+const getCowBulls = (guess) => {
+  let cows = 0;
+  let bulls = 0;
+  for (let i = 0; i < wordLength; i++) {
+    if (guess[i] === secret[i]) {
+      bulls++;
+    } else if (secret.includes(guess[i])) {
+      cows++;
+    }
+  }
+  return { cows, bulls };
 };
 
 const messageDisplay = document.querySelector(".message-container");
