@@ -143,10 +143,12 @@ const checkGuess = () => {
     console.log(`guess is : ${guess} and target word is : ${secret}`);
     if (guess == secret) {
       const cowBulls = getCowBulls(guess);
-
+      state.currentRow++;
       showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
       showMessage("Congratulations!!");
+      displayCowBullImages(cowBulls);
       isGameOver = true;
+
       return;
     } else {
       if (state.currentRow >= guesses - 1) {
@@ -199,13 +201,26 @@ const displayCowBullImages = (cowBulls) => {
 const getCowBulls = (guess) => {
   let cows = 0;
   let bulls = 0;
-  for (let i = 0; i < wordLength; i++) {
+
+  let secretCopy = secret.split("");
+  let guessCopy = guess.split("");
+
+  for (let i = 0; i < guess.length; i++) {
     if (guess[i] === secret[i]) {
       bulls++;
-    } else if (secret.includes(guess[i])) {
-      cows++;
+      secretCopy[i] = ""; // Mark the letter as counted in secretCopy
+      guessCopy[i] = ""; // Mark the letter as counted in guessCopy
     }
   }
+
+  for (let i = 0; i < guess.length; i++) {
+    if (guessCopy[i] !== "" && secretCopy.includes(guessCopy[i])) {
+      cows++;
+      const index = secretCopy.indexOf(guessCopy[i]);
+      secretCopy[index] = ""; // Mark the letter as counted in secretCopy
+    }
+  }
+
   return { cows, bulls };
 };
 
