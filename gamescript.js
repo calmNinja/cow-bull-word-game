@@ -142,6 +142,9 @@ const checkGuess = () => {
   if (state.currentTile > wordLength - 1) {
     console.log(`guess is : ${guess} and target word is : ${secret}`);
     if (guess == secret) {
+      const cowBulls = getCowBulls(guess);
+
+      showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
       showMessage("Congratulations!!");
       isGameOver = true;
       return;
@@ -222,3 +225,31 @@ const startUp = () => {
   registerKeyboardEvents();
 };
 startUp();
+
+//Script to open and close game rules modal
+const rulesModal = document.getElementById("rules-modal");
+const rulesButton = document.getElementById("rules-button");
+const closeRulesButton = document.getElementById("close-rules-modal");
+
+//functions to open & close modal
+function openRulesModal() {
+  rulesModal.style.display = "block";
+}
+
+function closeRulesModal() {
+  rulesModal.style.display = "none";
+}
+
+// Open the modal when the "Game Rules" button is clicked
+rulesButton.addEventListener("click", openRulesModal);
+closeRulesButton.addEventListener("click", closeRulesModal);
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    closeRulesModal();
+  }
+});
+window.addEventListener("click", function (event) {
+  if (event.target === rulesModal) {
+    closeRulesModal();
+  }
+});

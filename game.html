@@ -60,6 +60,42 @@
 
       <!-- Guessing Grid Ends -->
     </div>
+    <!-- Display game rules modal -->
+    <div id="rules-modal" class="rules-modal">
+      <div class="rules-modal-content">
+        <span id="close-rules-modal">&times;</span>
+        <h3 class="underline">Game Rules</h3>
+        <ul>
+          <li>
+            The game generates a <span class="highlights">random word</span> of
+            the chosen length.
+          </li>
+          <li>
+            The player has to guess the word within the given
+            <span class="highlights">number of attempts.</span>
+          </li>
+          <li>
+            After each guess, the game will provide feedback in the form of
+            <span class="highlights">'cows'</span> and
+            <span class="highlights">'bulls'.</span>
+          </li>
+          <li>
+            A <span class="highlights">'cow'</span> means a letter is in the
+            <span class="highlights">correct position,</span> and a
+            <span class="highlights">'bull'</span> means a letter is
+            <span class="highlights"
+              >in the word but in the wrong position.</span
+            >
+          </li>
+        </ul>
+        <p>
+          <span class="underline highlights">Note:</span> The word generated
+          will have
+          <span class="highlights">unique letters without repetitions.</span>
+        </p>
+      </div>
+    </div>
+    <!-- Display game rules modal ends -->
     <!-- Virtual Keyboard Begins -->
     <div id="keyboard-container">
       <div class="keyboard-row">
