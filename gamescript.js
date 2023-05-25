@@ -30,6 +30,12 @@ const state = {
   currentRow: 0,
   currentTile: 0,
 };
+// Function to disable Enter Key
+function disableEnterKey() {
+  const enterKey = document.getElementById("enterKey");
+  enterKey.classList.add("disabled");
+  enterKey.disabled = true;
+}
 
 const drawGrid = () => {
   for (let i = 0; i < guesses; i++) {
@@ -63,9 +69,7 @@ const drawGrid = () => {
     tilesGrid.appendChild(tileRow);
 
     //Disable Enter key
-    const enterKey = document.getElementById("enterKey");
-    enterKey.classList.add("disabled");
-    enterKey.disabled = true;
+    disableEnterKey();
 
     // Add tile row data to the grid state
     state.grid.push(tileRowData);
@@ -144,9 +148,7 @@ const deleteLetter = () => {
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
     // Disable the enter key if the row is not full
-    const enterKey = document.getElementById("enterKey");
-    enterKey.classList.add("disabled");
-    enterKey.disabled = true;
+    disableEnterKey();
   }
 };
 
@@ -179,9 +181,8 @@ const checkGuess = () => {
     //display bulls and cows
     showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
     displayCowBullImages(cowBulls);
-    const enterKey = document.getElementById("enterKey");
-    enterKey.classList.add("disabled");
-    enterKey.disabled = true;
+    //disable Enter Key after displaying results
+    disableEnterKey();
   }
 };
 
