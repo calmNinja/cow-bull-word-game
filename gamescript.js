@@ -86,8 +86,6 @@ const handleClick = (event) => {
     console.log("calling checkGuess function...");
     checkGuess();
     return;
-    // if (state.currentTile === wordLength) {
-    // }
   }
   //Finally update the tile with the letter
   addLetter(letter);
@@ -120,6 +118,13 @@ const addLetter = (letter) => {
     console.log(`state grid: ${state.grid}`);
     tile.setAttribute("data", letter); //to check for cow bull later
     state.currentTile++;
+
+    // Check if the row is full and enable the enter key
+    if (state.currentTile === wordLength) {
+      const enterKey = document.getElementById("enterKey");
+      enterKey.classList.remove("disabled");
+      enterKey.disabled = false;
+    }
   }
 };
 
@@ -133,6 +138,10 @@ const deleteLetter = () => {
     tile.textContent = "";
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
+    // Disable the enter key if the row is not full
+    const enterKey = document.getElementById("enterKey");
+    // enterKey.classList.add("disabled");
+    // enterKey.disabled = true;
   }
 };
 
@@ -180,21 +189,30 @@ const displayCowBullImages = (cowBulls) => {
   bullsElement.innerHTML = "";
   cowsElement.innerHTML = "";
 
-  //Append bulls images
-  Array.from({ length: cowBulls.bulls }).forEach(() => {
-    const bullImg = document.createElement("img");
-    bullImg.src = "./bull-icon.png";
-    bullImg.classList.add("bull-image");
-    bullsElement.appendChild(bullImg);
-  });
+  if (cowBulls.bulls === 0 && cowBulls.cows === 0) {
+    // Append a message or symbol indicating no cows and no bulls
+    const noneElement = document.createElement("span");
+    noneElement.textContent = "None";
+    noneElement.classList.add("none-message");
+    bullsElement.appendChild(noneElement);
+    cowsElement.appendChild(noneElement.cloneNode(true));
+  } else {
+    //Append bulls images
+    Array.from({ length: cowBulls.bulls }).forEach(() => {
+      const bullImg = document.createElement("img");
+      bullImg.src = "./bull-icon.png";
+      bullImg.classList.add("bull-image");
+      bullsElement.appendChild(bullImg);
+    });
 
-  //Append cow images
-  Array.from({ length: cowBulls.cows }).forEach(() => {
-    const cowImg = document.createElement("img");
-    cowImg.src = "./cow-icon.png";
-    cowImg.classList.add("cow-image");
-    cowsElement.appendChild(cowImg);
-  });
+    //Append cow images
+    Array.from({ length: cowBulls.cows }).forEach(() => {
+      const cowImg = document.createElement("img");
+      cowImg.src = "./cow-icon.png";
+      cowImg.classList.add("cow-image");
+      cowsElement.appendChild(cowImg);
+    });
+  }
 };
 
 //Game logic
