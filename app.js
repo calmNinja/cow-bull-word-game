@@ -11,16 +11,20 @@ const closeModalBtn = document.querySelector(".close-modal-button");
 const modalDialog = document.querySelector(".modal-dialog");
 const beginBtn = document.querySelector(".begin-button");
 
+const PAUSED_CLASS = "paused";
+
 // function to open the modal
 function openModal() {
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
+  playBtn.classList.add(PAUSED_CLASS);
 }
 
 // function to close the modal
 function closeModal() {
   modal.classList.remove("open");
   document.body.style.overflow = "auto";
+  playBtn.classList.remove(PAUSED_CLASS);
 }
 
 playBtn.addEventListener("click", openModal);

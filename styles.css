@@ -153,6 +153,10 @@ body {
   background-color: darkgreen;
 }
 
+.start-button.paused {
+  animation-play-state: paused;
+}
+
 /* Modal Styling begins */
 .modal {
   display: none; 
