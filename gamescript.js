@@ -23,6 +23,7 @@ const tilesGrid = document.querySelector(".tiles-grid");
 //target word - temporarily hardcoded
 const secret = "nice";
 let isGameOver = false;
+let isFirstTileFilled = false;
 
 // State object
 const state = {
@@ -31,12 +32,19 @@ const state = {
   currentTile: 0,
 };
 // Function to disable Enter Key
+const enterKey = document.getElementById("enterKey");
 function disableEnterKey() {
-  const enterKey = document.getElementById("enterKey");
+  // const enterKey = document.getElementById("enterKey");
   enterKey.classList.add("disabled");
   enterKey.disabled = true;
 }
 
+//Function to disable Delete Key
+const deleteKey = document.getElementById("deleteKey");
+function disableDeleteKey() {
+  deleteKey.classList.add("disabled");
+  deleteKey.disabled = true;
+}
 const drawGrid = () => {
   for (let i = 0; i < guesses; i++) {
     //Create a tile row
@@ -75,6 +83,9 @@ const drawGrid = () => {
     state.grid.push(tileRowData);
     console.log(tileRowData);
     console.log(state.grid);
+
+    // Disable the Delete key for each new row
+    disableDeleteKey();
   }
 
   //Append Tiles Grid to the Game Container
@@ -128,6 +139,18 @@ const addLetter = (letter) => {
     tile.setAttribute("data", letter); //to check for cow bull later
     state.currentTile++;
 
+    // Update the isFirstTileFilled variable if the current tile is the first tile in the row
+    if (state.currentTile === 1) {
+      isFirstTileFilled = true;
+    }
+
+    // Enable the delete key once the first tile is filled
+    if (state.currentTile === 1) {
+      // const deleteKey = document.getElementById("deleteKey");
+      deleteKey.classList.remove("disabled");
+      deleteKey.disabled = false;
+    }
+
     // Check if the row is full and enable the enter key
     if (state.currentTile == wordLength) {
       const enterKey = document.getElementById("enterKey");
@@ -147,6 +170,22 @@ const deleteLetter = () => {
     tile.textContent = "";
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
+
+    // Check if the current tile is the first tile in the row
+    if (state.currentTile === 0) {
+      isFirstTileFilled = false;
+    }
+
+    // Disable the delete key if the row has no filled tiles
+    // const deleteKey = document.getElementById("deleteKey");
+    const currentRowTiles = state.grid[state.currentRow];
+    const hasFilledTiles = currentRowTiles.some((tile) => tile !== "");
+    if (!hasFilledTiles || !isFirstTileFilled) {
+      disableDeleteKey();
+    } else {
+      deleteKey.classList.remove("disabled");
+      deleteKey.disabled = false;
+    }
     // Disable the enter key if the row is not full
     disableEnterKey();
   }
@@ -183,6 +222,7 @@ const checkGuess = () => {
     displayCowBullImages(cowBulls);
     //disable Enter Key after displaying results
     disableEnterKey();
+    disableDeleteKey();
   }
 };
 
