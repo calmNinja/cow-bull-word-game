@@ -10,11 +10,11 @@ const wordLength = urlParams.get("wordLength");
 const difficulty = urlParams.get("difficulty");
 
 const guesses = urlParams.get("guesses");
+
 function displayGameOptions() {
   wordLengthSpan.textContent = `${wordLength} letters`;
   difficultySpan.textContent = `${difficulty} (${guesses} guesses)`;
 }
-// displayGameOptions();
 
 // Generate the word guessing grid
 const gameContainer = document.querySelector("#game-container");
@@ -34,7 +34,6 @@ const state = {
 // Function to disable Enter Key
 const enterKey = document.getElementById("enterKey");
 function disableEnterKey() {
-  // const enterKey = document.getElementById("enterKey");
   enterKey.classList.add("disabled");
   enterKey.disabled = true;
 }
@@ -45,12 +44,17 @@ function disableDeleteKey() {
   deleteKey.classList.add("disabled");
   deleteKey.disabled = true;
 }
+
+//Function to enable Delete Key
+function enableDeleteKey() {
+  deleteKey.classList.remove("disabled");
+  deleteKey.disabled = false;
+}
 const drawGrid = () => {
   for (let i = 0; i < guesses; i++) {
     //Create a tile row
     const tileRow = document.createElement("div");
     tileRow.classList.add("tile-row");
-    // tileRow.setAttribute("id", `tileRow-${i}`);
     tileRow.setAttribute("id", `tileRow-${i + 1}`);
     //Create tiles
     const tileRowData = [];
@@ -76,16 +80,8 @@ const drawGrid = () => {
     //Append tile Rows to the Tile Grid
     tilesGrid.appendChild(tileRow);
 
-    //Disable Enter key
-    disableEnterKey();
-
     // Add tile row data to the grid state
     state.grid.push(tileRowData);
-    console.log(tileRowData);
-    console.log(state.grid);
-
-    // Disable the Delete key for each new row
-    disableDeleteKey();
   }
 
   //Append Tiles Grid to the Game Container
@@ -95,15 +91,12 @@ const drawGrid = () => {
 //Key event listener
 const handleClick = (event) => {
   const letter = event.target.getAttribute("data-key");
-  console.log(letter);
   //Handle different keys
   if (letter === "Backspace") {
     deleteLetter();
-    console.log(`state grid: ${state.grid}`);
     return;
   }
   if (letter === "Enter") {
-    console.log("calling checkGuess function...");
     checkGuess();
     return;
   }
@@ -123,7 +116,7 @@ const registerKeyboardEvents = () => {
     const key = e.key;
     console.log(`from the keyboard: ${key}`);
     //Handle different keys for physical keyboard events
-    //yet to be done
+    //TBD
   };
 };
 
@@ -135,20 +128,14 @@ const addLetter = (letter) => {
     );
     tile.textContent = letter;
     state.grid[state.currentRow][state.currentTile] = letter;
-    console.log(`state grid: ${state.grid}`);
     tile.setAttribute("data", letter); //to check for cow bull later
     state.currentTile++;
 
     // Update the isFirstTileFilled variable if the current tile is the first tile in the row
-    if (state.currentTile === 1) {
-      isFirstTileFilled = true;
-    }
-
     // Enable the delete key once the first tile is filled
     if (state.currentTile === 1) {
-      // const deleteKey = document.getElementById("deleteKey");
-      deleteKey.classList.remove("disabled");
-      deleteKey.disabled = false;
+      isFirstTileFilled = true;
+      enableDeleteKey();
     }
 
     // Check if the row is full and enable the enter key
@@ -171,20 +158,13 @@ const deleteLetter = () => {
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
 
-    // Check if the current tile is the first tile in the row
-    if (state.currentTile === 0) {
-      isFirstTileFilled = false;
-    }
-
     // Disable the delete key if the row has no filled tiles
-    // const deleteKey = document.getElementById("deleteKey");
     const currentRowTiles = state.grid[state.currentRow];
     const hasFilledTiles = currentRowTiles.some((tile) => tile !== "");
     if (!hasFilledTiles || !isFirstTileFilled) {
       disableDeleteKey();
     } else {
-      deleteKey.classList.remove("disabled");
-      deleteKey.disabled = false;
+      enableDeleteKey();
     }
     // Disable the enter key if the row is not full
     disableEnterKey();
@@ -203,7 +183,6 @@ const checkGuess = () => {
       showMessage("Congratulations!!");
       displayCowBullImages(cowBulls);
       isGameOver = true;
-
       return;
     } else {
       if (state.currentRow >= guesses - 1) {
