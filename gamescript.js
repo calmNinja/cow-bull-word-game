@@ -10,11 +10,11 @@ const wordLength = urlParams.get("wordLength");
 const difficulty = urlParams.get("difficulty");
 
 const guesses = urlParams.get("guesses");
+
 function displayGameOptions() {
   wordLengthSpan.textContent = `${wordLength} letters`;
   difficultySpan.textContent = `${difficulty} (${guesses} guesses)`;
 }
-// displayGameOptions();
 
 // Generate the word guessing grid
 const gameContainer = document.querySelector("#game-container");
@@ -23,6 +23,7 @@ const tilesGrid = document.querySelector(".tiles-grid");
 //target word - temporarily hardcoded
 const secret = "nice";
 let isGameOver = false;
+let isFirstTileFilled = false;
 
 // State object
 const state = {
@@ -30,13 +31,30 @@ const state = {
   currentRow: 0,
   currentTile: 0,
 };
+// Function to disable Enter Key
+const enterKey = document.getElementById("enterKey");
+function disableEnterKey() {
+  enterKey.classList.add("disabled");
+  enterKey.disabled = true;
+}
 
+//Function to disable Delete Key
+const deleteKey = document.getElementById("deleteKey");
+function disableDeleteKey() {
+  deleteKey.classList.add("disabled");
+  deleteKey.disabled = true;
+}
+
+//Function to enable Delete Key
+function enableDeleteKey() {
+  deleteKey.classList.remove("disabled");
+  deleteKey.disabled = false;
+}
 const drawGrid = () => {
   for (let i = 0; i < guesses; i++) {
     //Create a tile row
     const tileRow = document.createElement("div");
     tileRow.classList.add("tile-row");
-    // tileRow.setAttribute("id", `tileRow-${i}`);
     tileRow.setAttribute("id", `tileRow-${i + 1}`);
     //Create tiles
     const tileRowData = [];
@@ -64,8 +82,6 @@ const drawGrid = () => {
 
     // Add tile row data to the grid state
     state.grid.push(tileRowData);
-    console.log(tileRowData);
-    console.log(state.grid);
   }
 
   //Append Tiles Grid to the Game Container
@@ -75,19 +91,14 @@ const drawGrid = () => {
 //Key event listener
 const handleClick = (event) => {
   const letter = event.target.getAttribute("data-key");
-  console.log(letter);
   //Handle different keys
   if (letter === "Backspace") {
     deleteLetter();
-    console.log(`state grid: ${state.grid}`);
     return;
   }
   if (letter === "Enter") {
-    console.log("calling checkGuess function...");
     checkGuess();
     return;
-    // if (state.currentTile === wordLength) {
-    // }
   }
   //Finally update the tile with the letter
   addLetter(letter);
@@ -105,7 +116,7 @@ const registerKeyboardEvents = () => {
     const key = e.key;
     console.log(`from the keyboard: ${key}`);
     //Handle different keys for physical keyboard events
-    //yet to be done
+    //TBD
   };
 };
 
@@ -117,9 +128,22 @@ const addLetter = (letter) => {
     );
     tile.textContent = letter;
     state.grid[state.currentRow][state.currentTile] = letter;
-    console.log(`state grid: ${state.grid}`);
     tile.setAttribute("data", letter); //to check for cow bull later
     state.currentTile++;
+
+    // Update the isFirstTileFilled variable if the current tile is the first tile in the row
+    // Enable the delete key once the first tile is filled
+    if (state.currentTile === 1) {
+      isFirstTileFilled = true;
+      enableDeleteKey();
+    }
+
+    // Check if the row is full and enable the enter key
+    if (state.currentTile == wordLength) {
+      const enterKey = document.getElementById("enterKey");
+      enterKey.classList.remove("disabled");
+      enterKey.disabled = false;
+    }
   }
 };
 
@@ -133,6 +157,17 @@ const deleteLetter = () => {
     tile.textContent = "";
     state.grid[state.currentRow][state.currentTile] = "";
     tile.setAttribute("data", ""); //to check for cow bull later
+
+    // Disable the delete key if the row has no filled tiles
+    const currentRowTiles = state.grid[state.currentRow];
+    const hasFilledTiles = currentRowTiles.some((tile) => tile !== "");
+    if (!hasFilledTiles || !isFirstTileFilled) {
+      disableDeleteKey();
+    } else {
+      enableDeleteKey();
+    }
+    // Disable the enter key if the row is not full
+    disableEnterKey();
   }
 };
 
@@ -148,7 +183,6 @@ const checkGuess = () => {
       showMessage("Congratulations!!");
       displayCowBullImages(cowBulls);
       isGameOver = true;
-
       return;
     } else {
       if (state.currentRow >= guesses - 1) {
@@ -165,6 +199,9 @@ const checkGuess = () => {
     //display bulls and cows
     showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
     displayCowBullImages(cowBulls);
+    //disable Enter Key after displaying results
+    disableEnterKey();
+    disableDeleteKey();
   }
 };
 
@@ -180,21 +217,30 @@ const displayCowBullImages = (cowBulls) => {
   bullsElement.innerHTML = "";
   cowsElement.innerHTML = "";
 
-  //Append bulls images
-  Array.from({ length: cowBulls.bulls }).forEach(() => {
-    const bullImg = document.createElement("img");
-    bullImg.src = "./bull-icon.png";
-    bullImg.classList.add("bull-image");
-    bullsElement.appendChild(bullImg);
-  });
+  if (cowBulls.bulls === 0 && cowBulls.cows === 0) {
+    // Append a message or symbol indicating no cows and no bulls
+    const noneElement = document.createElement("span");
+    noneElement.textContent = "None";
+    noneElement.classList.add("none-message");
+    bullsElement.appendChild(noneElement);
+    cowsElement.appendChild(noneElement.cloneNode(true));
+  } else {
+    //Append bulls images
+    Array.from({ length: cowBulls.bulls }).forEach(() => {
+      const bullImg = document.createElement("img");
+      bullImg.src = "./bull-icon.png";
+      bullImg.classList.add("bull-image");
+      bullsElement.appendChild(bullImg);
+    });
 
-  //Append cow images
-  Array.from({ length: cowBulls.cows }).forEach(() => {
-    const cowImg = document.createElement("img");
-    cowImg.src = "./cow-icon.png";
-    cowImg.classList.add("cow-image");
-    cowsElement.appendChild(cowImg);
-  });
+    //Append cow images
+    Array.from({ length: cowBulls.cows }).forEach(() => {
+      const cowImg = document.createElement("img");
+      cowImg.src = "./cow-icon.png";
+      cowImg.classList.add("cow-image");
+      cowsElement.appendChild(cowImg);
+    });
+  }
 };
 
 //Game logic

@@ -229,7 +229,10 @@
 .keyboard-row .spacer-half {
   flex-grow:0.5;
 }
-
+.disabled {
+  opacity: 0.5; /* Reduce opacity to indicate disabled state */
+  pointer-events: none; /* Disable pointer events */
+}
 /* temporary message showing */
 .message-container {
   color: rgb(233, 31, 65);
@@ -262,6 +265,11 @@
   margin-right: 0.25rem; /* Add margin only on the right side */
 }
 
+/* No cow No Bull Message */
+.none-message {
+  color: gray;
+  font-style: italic;
+}
 /* Game rules modal */
 .rules-modal {
   display: none; 
