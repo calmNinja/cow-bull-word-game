@@ -183,11 +183,24 @@ const checkGuess = () => {
       showMessage("Congratulations!!");
       displayCowBullImages(cowBulls);
       isGameOver = true;
+      setTimeout(() => {
+        showGameOverModal(
+          "Congratulations! \u{1F389}",
+          `The word was '<span class="target-word">${secret}</span>'.`
+        );
+      }, 500);
       return;
     } else {
       if (state.currentRow >= guesses - 1) {
         isGameOver = true;
         showMessage("Game Over!");
+        setTimeout(() => {
+          showGameOverModal(
+            "Game Over \u{1F480}",
+            `The word was '<span class="target-word">${secret}</span>'.`
+          );
+        }, 500);
+
         return;
       }
       if (state.currentRow < guesses) {
@@ -304,13 +317,75 @@ function closeRulesModal() {
 // Open the modal when the "Game Rules" button is clicked
 rulesButton.addEventListener("click", openRulesModal);
 closeRulesButton.addEventListener("click", closeRulesModal);
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    closeRulesModal();
-  }
-});
+// document.addEventListener("keydown", function (e) {
+//   if (e.key === "Escape") {
+//     closeRulesModal();
+//   }
+// });
 window.addEventListener("click", function (event) {
   if (event.target === rulesModal) {
     closeRulesModal();
+  }
+});
+
+const gameOverModal = document.getElementById("game-over-modal");
+// Function to close the modal and navigate to the home page
+function closeModalAndNavigateToHomePage() {
+  console.log("calling close modal and navigate to Home Page");
+  // const modal = document.getElementById("game-over-modal");
+  gameOverModal.classList.add("hidden");
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 4000);
+  // window.location.href = "index.html";
+}
+
+// Function to display the game-over modal with custom content
+function showGameOverModal(title, message) {
+  //const gameOverModal = document.getElementById("game-over-modal");
+  const gameOverModalTitle = document.getElementById("game-over-modal-title");
+  const gameOverModalMessage = document.getElementById(
+    "game-over-modal-message"
+  );
+  const closeSymbol = document.getElementById("close-game-over-modal");
+
+  gameOverModalTitle.textContent = title;
+  gameOverModalMessage.innerHTML = message;
+  gameOverModal.classList.remove("hidden");
+
+  // Close modal and navigate to the home page when close symbol is clicked
+  closeSymbol.addEventListener("click", closeModalAndNavigateToHomePage);
+  // Close modal and navigate to the home page when clicking outside the modal
+  document.addEventListener("click", function (event) {
+    const modal = document.getElementById("game-over-modal");
+    if (event.target === modal) {
+      closeModalAndNavigateToHomePage();
+    }
+  });
+}
+
+//Handling esc key for respective modals
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "Escape") {
+//     if (!gameOverModal.classList.contains("hidden")) {
+//       console.log("Trying to escape from Game Over Modal");
+//       closeModalAndNavigateToHomePage();
+//       // } else if (!document.querySelector("#rules-modal.hidden")) {
+//     } else if (!rulesModal.classList.contains("hidden")) {
+//       console.log("Trying to escape from rules modal");
+//       closeRulesModal();
+//     }
+//   }
+// });
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    if (gameOverModal.style.display !== "none") {
+      console.log("Trying to escape from Game Over Modal");
+      closeModalAndNavigateToHomePage();
+    } else if (rulesModal.style.display !== "none") {
+      console.log("Trying to escape from rules modal");
+      closeRulesModal();
+    }
   }
 });
