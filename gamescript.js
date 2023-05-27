@@ -336,7 +336,7 @@ function closeModalAndNavigateToHomePage() {
   gameOverModal.classList.add("hidden");
   setTimeout(() => {
     window.location.href = "index.html";
-  }, 4000);
+  }, 500);
   // window.location.href = "index.html";
 }
 
@@ -365,25 +365,12 @@ function showGameOverModal(title, message) {
 }
 
 //Handling esc key for respective modals
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === "Escape") {
-//     if (!gameOverModal.classList.contains("hidden")) {
-//       console.log("Trying to escape from Game Over Modal");
-//       closeModalAndNavigateToHomePage();
-//       // } else if (!document.querySelector("#rules-modal.hidden")) {
-//     } else if (!rulesModal.classList.contains("hidden")) {
-//       console.log("Trying to escape from rules modal");
-//       closeRulesModal();
-//     }
-//   }
-// });
-
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
-    if (gameOverModal.style.display !== "none") {
+    if (!gameOverModal.classList.contains("hidden")) {
       console.log("Trying to escape from Game Over Modal");
       closeModalAndNavigateToHomePage();
-    } else if (rulesModal.style.display !== "none") {
+    } else if (rulesModal.style.display != "none") {
       console.log("Trying to escape from rules modal");
       closeRulesModal();
     }
