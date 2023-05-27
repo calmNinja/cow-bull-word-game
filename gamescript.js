@@ -342,7 +342,6 @@ function closeModalAndNavigateToHomePage() {
 
 // Function to display the game-over modal with custom content
 function showGameOverModal(title, message) {
-  //const gameOverModal = document.getElementById("game-over-modal");
   const gameOverModalTitle = document.getElementById("game-over-modal-title");
   const gameOverModalMessage = document.getElementById(
     "game-over-modal-message"
@@ -363,6 +362,18 @@ function showGameOverModal(title, message) {
     }
   });
 }
+
+//Handle Play Again Feature
+function closeModalAndPlayAgain() {
+  console.log("calling closeModal and Play Again");
+  gameOverModal.style.display = "none";
+  const queryParams = new URLSearchParams();
+  queryParams.set("showGameOptionsModal", "true");
+  const gameOptionsUrl = `index.html?${queryParams.toString()}`;
+  window.location.href = gameOptionsUrl;
+}
+const playAgainBtn = document.getElementById("game-over-play-again-button");
+playAgainBtn.addEventListener("click", closeModalAndPlayAgain);
 
 //Handling esc key for respective modals
 document.addEventListener("keydown", function (event) {
