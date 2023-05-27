@@ -70,3 +70,13 @@ beginBtn.addEventListener("click", () => {
   //   "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty`;
   window.location.href = gameOptionsUrl;
 });
+
+//Handle Play Again button from game.html
+// Check if the URL has the parameter "showGameOptionsModal" set to "true"
+const urlParams = new URLSearchParams(window.location.search);
+const showGameOptionsModal = urlParams.get("showGameOptionsModal");
+
+// If the parameter is set to "true", display the game options modal
+if (showGameOptionsModal === "true") {
+  openModal();
+}
