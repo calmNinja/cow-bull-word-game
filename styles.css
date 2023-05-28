@@ -101,11 +101,9 @@ body {
   text-align: center;
   text-decoration: underline;
   color: darkgreen;
-  /* margin-bottom: 1rem; */
 }
 
 .rules-container ul {
-  /* list-style-type: none; */
   list-style-position: outside;
   font-size: 1.5rem;
   padding: 1rem 2rem;
@@ -115,7 +113,12 @@ body {
   margin: 0.5rem 0;
   text-indent: 1rem;
   text-align: justify;
-  line-height: 3rem ;
+  line-height: 2.5rem ;
+}
+
+.rules-container p {
+  font-size: 1.25rem;
+  padding: 0.25rem;
 }
 
 .highlights {
@@ -247,10 +250,41 @@ body {
 }
 
 /* Modal styling ends */
-/*
+
+/* Footer Styling begins */
 footer {
-  display: none;
-} */
+  /* 52b788 */
+  background-color: #33b679;
+  padding: 0.5rem;
+  text-align: center;
+  color: black;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-content p {
+  margin: 0.5rem 0;
+}
+.footer-content p:first-child {
+  margin-bottom: 1rem;
+}
+.footer-content a {
+  color: #333;
+  text-decoration: none;
+}
+.footer-content a:hover {
+  text-decoration: underline;
+}
+
+.footer-content .copyright {
+  font-size: 0.8rem;
+  color: #777;
+}
+/* Footer Styling ends */
 
 /* Media queries */
 
