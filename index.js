@@ -60,7 +60,9 @@ function getRandomWordFromPredefined(wordLength) {
 }
 
 app.get("/word", async (req, res) => {
-  const wordLength = 4; // Replace with the desired word length
+  //   const wordLength = 4; // Replace with the desired word length
+  const { wordLength } = req.query;
+  console.log(parseInt(wordLength));
 
   try {
     const randomWord = await generateRandomWord(wordLength);
@@ -68,7 +70,7 @@ app.get("/word", async (req, res) => {
     res.json(randomWord);
   } catch (error) {
     console.error("Error:", error);
-    res.send(`<h1>Unable to generate a random word.</h1>`);
+    res.status(500).json({ error: "Unable to generate a random word." });
   }
 });
 

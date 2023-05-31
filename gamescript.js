@@ -26,7 +26,8 @@ const tilesGrid = document.querySelector(".tiles-grid");
 //fetching the secret word from backend
 let secret;
 const getSecret = () => {
-  fetch("http://localhost:8000/word")
+  fetch(`http://localhost:8000/word?wordLength=${wordLength}`)
+    // http://localhost:8000/word?wordLength=${wordLength}
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
