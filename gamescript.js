@@ -21,7 +21,24 @@ const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
 
 //target word - temporarily hardcoded
-const secret = "nice";
+//const secret = "nice";
+
+//fetching the secret word from backend
+let secret;
+const getSecret = () => {
+  fetch("http://localhost:8000/word")
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      secret = json;
+      // secret = json.toUpperCase();
+    })
+    .catch((err) => console.log(err));
+};
+getSecret();
+
+//ends here
+
 let isGameOver = false;
 let isFirstTileFilled = false;
 
