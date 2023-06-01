@@ -22,10 +22,15 @@ function hasUniqueLetters(word) {
 
 // Function to generate a random word from the API
 async function generateRandomWord(wordLength) {
+  console.log(
+    "inside generateRandomWord function, the received wordLenght is " +
+      wordLength
+  );
   const apiUrl = `https://random-word-api.herokuapp.com/word?number=1&length=${wordLength}`;
 
   try {
     const response = await axios.get(apiUrl);
+    console.log("receiving response from api");
     const randomWord = response.data[0];
 
     if (hasUniqueLetters(randomWord)) {
@@ -42,30 +47,36 @@ async function generateRandomWord(wordLength) {
 // Function to get a random word from the predefined arrays
 function getRandomWordFromPredefined(wordLength) {
   let wordList;
-  switch (wordLength) {
+  switch (parseInt(wordLength)) {
     case 4:
       wordList = random4;
+      console.log("fetching from array of length 4");
       break;
     case 5:
       wordList = random5;
+      console.log("fetching from array of length 5");
       break;
     case 6:
       wordList = random6;
+      console.log("fetching from array of length 6");
       break;
     default:
-      return "";
+      console.log("didn't match a word length..");
+      return "No Word Available";
   }
 
   return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
 app.get("/word", async (req, res) => {
-  //   const wordLength = 4; // Replace with the desired word length
+  //   const wordLength = 4;
   const { wordLength } = req.query;
-  console.log(parseInt(wordLength));
+  console.log("parsing int.. " + parseInt(wordLength));
+  console.log("without parsing int..." + wordLength);
 
   try {
     const randomWord = await generateRandomWord(wordLength);
+    console.log("trying to generate random word of length " + wordLength);
     //res.send(`<h1>The target word is: ${randomWord}</h1>`);
     res.json(randomWord);
   } catch (error) {
