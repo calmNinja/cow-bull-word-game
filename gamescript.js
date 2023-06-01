@@ -20,9 +20,6 @@ function displayGameOptions() {
 const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
 
-//target word - temporarily hardcoded
-//const secret = "nice";
-
 //fetching the secret word from backend
 let secret;
 const getSecret = () => {
@@ -36,8 +33,6 @@ const getSecret = () => {
     .catch((err) => console.log(err));
 };
 getSecret();
-
-//ends here
 
 let isGameOver = false;
 let isFirstTileFilled = false;
@@ -188,11 +183,15 @@ const deleteLetter = () => {
   }
 };
 
+//****** */
+//Logic to check for dictionary word
+
+//****** */
+
 //Check guessed word
 const checkGuess = () => {
   const guess = state.grid[state.currentRow].join("");
   if (state.currentTile > wordLength - 1) {
-    console.log(`guess is : ${guess} and target word is : ${secret}`);
     if (guess == secret) {
       const cowBulls = getCowBulls(guess);
       state.currentRow++;
@@ -205,7 +204,7 @@ const checkGuess = () => {
           "Congratulations! \u{1F389}",
           `The word was '<span class="target-word">${secret}</span>'.`
         );
-      }, 500);
+      }, 1000);
       return;
     } else {
       if (state.currentRow >= guesses - 1) {
