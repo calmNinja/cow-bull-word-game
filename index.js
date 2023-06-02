@@ -77,7 +77,7 @@ app.get("/word", async (req, res) => {
 
 //Function to check if a word is dictionary word
 app.get("/check-dictionary", (req, res) => {
-  const guess = "look";
+  const guess = req.query.word; // Get the word from the query parameter
   const apiKey = process.env.API_KEY;
   const dictApiUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${guess}?key=${apiKey}`;
 
@@ -90,12 +90,12 @@ app.get("/check-dictionary", (req, res) => {
         const meta = data[0].meta;
         console.log(meta);
         if (meta && meta.id.includes(guess)) {
-          res.send(`valid`);
+          res.json({ status: "valid" });
         } else {
-          res.send(`invalid`);
+          res.json({ status: "invalid" });
         }
       } else {
-        res.send(`${guess} does not exist in the dictionary.`);
+        res.json({ status: "not_found" });
       }
     })
     .catch((error) => {
