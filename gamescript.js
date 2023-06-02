@@ -1,5 +1,3 @@
-//const { response } = require("express");
-
 const wordLengthSpan = document.querySelector("#option-length");
 const difficultySpan = document.querySelector("#option-level");
 
@@ -119,20 +117,12 @@ const handleClick = (event) => {
   addLetter(letter);
 };
 
-//Selecting keys from keyboard
+//Register Keyboard events on Virtual Keyboard
 const registerKeyboardEvents = () => {
-  //Register Events from Virtual Keyboard
   const keys = document.querySelectorAll(".keyboard-row button");
   keys.forEach((key) => {
     key.addEventListener("click", handleClick);
   });
-  //Register Events from Physical Keyboard
-  document.body.onkeydown = (e) => {
-    const key = e.key;
-    console.log(`from the keyboard: ${key}`);
-    //Handle different keys for physical keyboard events
-    //TBD
-  };
 };
 
 //Add Letter to the Tile
@@ -190,6 +180,8 @@ const deleteLetter = () => {
 const checkGuess = () => {
   const guess = state.grid[state.currentRow].join("");
   if (state.currentTile > wordLength - 1) {
+    disableEnterKey();
+    disableDeleteKey();
     //Function to check if guess is a dictionary word
     fetch(`http://localhost:8000/check-dictionary/?word=${guess}`)
       .then((response) => response.json())
@@ -213,7 +205,13 @@ const checkGuess = () => {
             }, 1000);
             return;
           } else {
+            //Handling last row of guess
             if (state.currentRow >= guesses - 1) {
+              console.log("last guess.."); //added
+              console.log("Calling results on the last guess.."); //added
+              state.currentRow++; //added
+              const cowBulls = getCowBulls(guess); //added
+              displayCowBullImages(cowBulls); //added
               isGameOver = true;
               setTimeout(() => {
                 showGameOverModal(
@@ -231,12 +229,6 @@ const checkGuess = () => {
           }
           const cowBulls = getCowBulls(guess);
           displayCowBullImages(cowBulls);
-          disableEnterKey();
-          disableDeleteKey();
-        } else if (json.status === "not_found") {
-          console.log(`${guess} does not exist in the dictionary.`);
-        } else {
-          console.error("Error fetching dictionary API:", error);
         }
       })
       .catch((error) => {
@@ -249,6 +241,7 @@ const checkGuess = () => {
 
 //Display Cow Bull Results as Images
 const displayCowBullImages = (cowBulls) => {
+  console.log("calling displayCowBullImages function for result..");
   const bullsElement = document.querySelector(
     `#tileRow-${state.currentRow} .bulls`
   );
@@ -320,13 +313,12 @@ const showMessage = (message) => {
   messageDisplay.append(messageElement);
   disableDeleteKey();
   disableEnterKey();
-  // setTimeout(() => messageDisplay.removeChild(messageElement), 2000);
   setTimeout(() => {
     messageDisplay.removeChild(messageElement);
     if (message === "Your Guess is Invalid") {
       deleteRowTiles(state.currentRow);
     }
-  }, 2000);
+  }, 1500);
 };
 
 // Function to delete the letters in the given row
