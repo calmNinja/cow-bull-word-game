@@ -1,3 +1,4 @@
+const utils = require("./utils");
 const axios = require("axios").default;
 const express = require("express");
 const cors = require("cors");
@@ -5,11 +6,6 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
-
-// Predefined arrays for different word lengths
-const random4 = ["goal", "nice", "rice", "mail", "toil"];
-const random5 = ["foyer", "tails", "mails", "steak", "polar"];
-const random6 = ["frying", "trying", "bolted", "strand", "brains"];
 
 // Maximum number of attempts to find a unique word
 const maxAttempts = 10;
@@ -36,29 +32,7 @@ async function generateRandomWord(wordLength) {
     throw error;
   }
 
-  return getRandomWordFromPredefined(wordLength);
-}
-
-// Function to get a random word from the predefined arrays
-function getRandomWordFromPredefined(wordLength) {
-  let wordList;
-  switch (parseInt(wordLength)) {
-    case 4:
-      wordList = random4;
-      break;
-    case 5:
-      wordList = random5;
-      break;
-    case 6:
-      wordList = random6;
-      break;
-    default:
-      return res
-        .status(404)
-        .send("Something went wrong.. Please try again later!");
-  }
-
-  return wordList[Math.floor(Math.random() * wordList.length)];
+  return utils.getRandomWordFromPredefined(wordLength);
 }
 
 app.get("/word", async (req, res) => {

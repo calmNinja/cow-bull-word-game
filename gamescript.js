@@ -35,6 +35,21 @@ const getSecret = async () => {
     console.log(err);
   }
 };
+// function getSecret() {
+//   return fetch("/api/secret")
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const secret = data.secret;
+//       return checkWordInDictionary(secret).then((valid) => {
+//         if (valid) {
+//           return secret; // Return valid secret
+//         } else {
+//           return getSecret(); // Retry fetching a new secret
+//         }
+//       });
+//     });
+// }
+
 getSecret();
 
 let isGameOver = false;
