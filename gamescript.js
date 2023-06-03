@@ -20,25 +20,37 @@ function displayGameOptions() {
 const gameContainer = document.querySelector("#game-container");
 const tilesGrid = document.querySelector(".tiles-grid");
 
-//target word - temporarily hardcoded
-//const secret = "nice";
-
 //fetching the secret word from backend
 let secret;
-const getSecret = () => {
-  fetch(`http://localhost:8000/word?wordLength=${wordLength}`)
-    // http://localhost:8000/word?wordLength=${wordLength}
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      secret = json;
-      // secret = json.toUpperCase();
-    })
-    .catch((err) => console.log(err));
-};
-getSecret();
 
-//ends here
+const getSecret = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/word?wordLength=${wordLength}`
+    );
+    const json = await response.json();
+    secret = json;
+    console.log(secret);
+  } catch (err) {
+    console.log(err);
+  }
+};
+// function getSecret() {
+//   return fetch("/api/secret")
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const secret = data.secret;
+//       return checkWordInDictionary(secret).then((valid) => {
+//         if (valid) {
+//           return secret; // Return valid secret
+//         } else {
+//           return getSecret(); // Retry fetching a new secret
+//         }
+//       });
+//     });
+// }
+
+getSecret();
 
 let isGameOver = false;
 let isFirstTileFilled = false;
@@ -49,6 +61,7 @@ const state = {
   currentRow: 0,
   currentTile: 0,
 };
+
 // Function to disable Enter Key
 const enterKey = document.getElementById("enterKey");
 function disableEnterKey() {
@@ -122,20 +135,12 @@ const handleClick = (event) => {
   addLetter(letter);
 };
 
-//Selecting keys from keyboard
+//Register Keyboard events on Virtual Keyboard
 const registerKeyboardEvents = () => {
-  //Register Events from Virtual Keyboard
   const keys = document.querySelectorAll(".keyboard-row button");
   keys.forEach((key) => {
     key.addEventListener("click", handleClick);
   });
-  //Register Events from Physical Keyboard
-  document.body.onkeydown = (e) => {
-    const key = e.key;
-    console.log(`from the keyboard: ${key}`);
-    //Handle different keys for physical keyboard events
-    //TBD
-  };
 };
 
 //Add Letter to the Tile
@@ -189,16 +194,38 @@ const deleteLetter = () => {
   }
 };
 
+// Function to check the guessed word against the dictionary
+const checkWordInDictionary = async (word) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/check-dictionary/?word=${word}`
+    );
+    const json = await response.json();
+    return json.status === "valid";
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+};
+
 //Check guessed word
-const checkGuess = () => {
+const checkGuess = async () => {
   const guess = state.grid[state.currentRow].join("");
+
   if (state.currentTile > wordLength - 1) {
-    console.log(`guess is : ${guess} and target word is : ${secret}`);
-    if (guess == secret) {
+    disableEnterKey();
+    disableDeleteKey();
+
+    const isValid = await checkWordInDictionary(guess);
+
+    if (!isValid) {
+      showMessage("Your Guess is Invalid");
+      return;
+    }
+
+    if (guess === secret) {
       const cowBulls = getCowBulls(guess);
       state.currentRow++;
-      showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
-      showMessage("Congratulations!!");
       displayCowBullImages(cowBulls);
       isGameOver = true;
       setTimeout(() => {
@@ -206,38 +233,39 @@ const checkGuess = () => {
           "Congratulations! \u{1F389}",
           `The word was '<span class="target-word">${secret}</span>'.`
         );
+      }, 1000);
+      return;
+    }
+
+    if (state.currentRow >= guesses - 1) {
+      console.log("last guess..");
+      console.log("Calling results on the last guess..");
+      state.currentRow++;
+      const cowBulls = getCowBulls(guess);
+      displayCowBullImages(cowBulls);
+      isGameOver = true;
+      setTimeout(() => {
+        showGameOverModal(
+          "Game Over \u{1F480}",
+          `The word was '<span class="target-word">${secret}</span>'.`
+        );
       }, 500);
       return;
-    } else {
-      if (state.currentRow >= guesses - 1) {
-        isGameOver = true;
-        showMessage("Game Over!");
-        setTimeout(() => {
-          showGameOverModal(
-            "Game Over \u{1F480}",
-            `The word was '<span class="target-word">${secret}</span>'.`
-          );
-        }, 500);
-
-        return;
-      }
-      if (state.currentRow < guesses) {
-        state.currentRow++;
-        state.currentTile = 0;
-      }
     }
+
+    if (state.currentRow < guesses) {
+      state.currentRow++;
+      state.currentTile = 0;
+    }
+
     const cowBulls = getCowBulls(guess);
-    //display bulls and cows
-    showMessage(`Bulls: ${cowBulls.bulls}, Cows: ${cowBulls.cows}`);
     displayCowBullImages(cowBulls);
-    //disable Enter Key after displaying results
-    disableEnterKey();
-    disableDeleteKey();
   }
 };
 
 //Display Cow Bull Results as Images
 const displayCowBullImages = (cowBulls) => {
+  console.log("calling displayCowBullImages function for result..");
   const bullsElement = document.querySelector(
     `#tileRow-${state.currentRow} .bulls`
   );
@@ -285,8 +313,8 @@ const getCowBulls = (guess) => {
   for (let i = 0; i < guess.length; i++) {
     if (guess[i] === secret[i]) {
       bulls++;
-      secretCopy[i] = ""; // Mark the letter as counted in secretCopy
-      guessCopy[i] = ""; // Mark the letter as counted in guessCopy
+      secretCopy[i] = "";
+      guessCopy[i] = "";
     }
   }
 
@@ -294,7 +322,7 @@ const getCowBulls = (guess) => {
     if (guessCopy[i] !== "" && secretCopy.includes(guessCopy[i])) {
       cows++;
       const index = secretCopy.indexOf(guessCopy[i]);
-      secretCopy[index] = ""; // Mark the letter as counted in secretCopy
+      secretCopy[index] = "";
     }
   }
 
@@ -307,7 +335,27 @@ const showMessage = (message) => {
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
   messageDisplay.append(messageElement);
-  setTimeout(() => messageDisplay.removeChild(messageElement), 2000);
+  disableDeleteKey();
+  disableEnterKey();
+  setTimeout(() => {
+    messageDisplay.removeChild(messageElement);
+    if (message === "Your Guess is Invalid") {
+      deleteRowTiles(state.currentRow);
+    }
+  }, 1500);
+};
+
+// Function to delete the letters in the given row
+const deleteRowTiles = (rowIndex) => {
+  const rowTiles = state.grid[rowIndex];
+  rowTiles.forEach((_, columnIndex) => {
+    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
+    tile.textContent = "";
+    state.grid[rowIndex][columnIndex] = "";
+  });
+  disableDeleteKey();
+  disableEnterKey();
+  state.currentTile = 0;
 };
 
 //Game Start
@@ -324,22 +372,17 @@ const rulesButton = document.getElementById("rules-button");
 const closeRulesButton = document.getElementById("close-rules-modal");
 
 //functions to open & close modal
-function openRulesModal() {
+const openRulesModal = () => {
   rulesModal.style.display = "block";
-}
+};
 
-function closeRulesModal() {
+const closeRulesModal = () => {
   rulesModal.style.display = "none";
-}
+};
 
 // Open the modal when the "Game Rules" button is clicked
 rulesButton.addEventListener("click", openRulesModal);
 closeRulesButton.addEventListener("click", closeRulesModal);
-// document.addEventListener("keydown", function (e) {
-//   if (e.key === "Escape") {
-//     closeRulesModal();
-//   }
-// });
 window.addEventListener("click", function (event) {
   if (event.target === rulesModal) {
     closeRulesModal();
@@ -348,18 +391,16 @@ window.addEventListener("click", function (event) {
 
 const gameOverModal = document.getElementById("game-over-modal");
 // Function to close the modal and navigate to the home page
-function closeModalAndNavigateToHomePage() {
+const closeModalAndNavigateToHomePage = () => {
   console.log("calling close modal and navigate to Home Page");
-  // const modal = document.getElementById("game-over-modal");
   gameOverModal.classList.add("hidden");
   setTimeout(() => {
     window.location.href = "index.html";
   }, 500);
-  // window.location.href = "index.html";
-}
+};
 
 // Function to display the game-over modal with custom content
-function showGameOverModal(title, message) {
+const showGameOverModal = (title, message) => {
   const gameOverModalTitle = document.getElementById("game-over-modal-title");
   const gameOverModalMessage = document.getElementById(
     "game-over-modal-message"
@@ -379,17 +420,17 @@ function showGameOverModal(title, message) {
       closeModalAndNavigateToHomePage();
     }
   });
-}
+};
 
 //Handle Play Again Feature
-function closeModalAndPlayAgain() {
+const closeModalAndPlayAgain = () => {
   console.log("calling closeModal and Play Again");
   gameOverModal.style.display = "none";
   const queryParams = new URLSearchParams();
   queryParams.set("showGameOptionsModal", "true");
   const gameOptionsUrl = `index.html?${queryParams.toString()}`;
   window.location.href = gameOptionsUrl;
-}
+};
 const playAgainBtn = document.getElementById("game-over-play-again-button");
 playAgainBtn.addEventListener("click", closeModalAndPlayAgain);
 

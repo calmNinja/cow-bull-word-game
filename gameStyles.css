@@ -235,7 +235,9 @@
 /* temporary message showing */
 .message-container {
   color: rgb(233, 31, 65);
-  height: 50px;
+  height: 1rem;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 /* Styling cow bull */

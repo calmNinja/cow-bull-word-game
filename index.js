@@ -1,3 +1,4 @@
+const utils = require("./utils");
 const axios = require("axios").default;
 const express = require("express");
 const cors = require("cors");
@@ -5,11 +6,6 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
-
-// Predefined arrays for different word lengths
-const random4 = ["goal", "nice", "rice", "mail", "toil"];
-const random5 = ["foyer", "tails", "mails", "steak", "polar"];
-const random6 = ["frying", "trying", "bolted", "strand", "brains"];
 
 // Maximum number of attempts to find a unique word
 const maxAttempts = 10;
@@ -22,10 +18,10 @@ function hasUniqueLetters(word) {
 
 // Function to generate a random word from the API
 async function generateRandomWord(wordLength) {
-  const apiUrl = `https://random-word-api.herokuapp.com/word?number=1&length=${wordLength}`;
+  const randomWordApiUrl = `https://random-word-api.herokuapp.com/word?number=1&length=${wordLength}`;
 
   try {
-    const response = await axios.get(apiUrl);
+    const response = await axios.get(randomWordApiUrl);
     const randomWord = response.data[0];
 
     if (hasUniqueLetters(randomWord)) {
@@ -36,42 +32,49 @@ async function generateRandomWord(wordLength) {
     throw error;
   }
 
-  return getRandomWordFromPredefined(wordLength);
-}
-
-// Function to get a random word from the predefined arrays
-function getRandomWordFromPredefined(wordLength) {
-  let wordList;
-  switch (wordLength) {
-    case 4:
-      wordList = random4;
-      break;
-    case 5:
-      wordList = random5;
-      break;
-    case 6:
-      wordList = random6;
-      break;
-    default:
-      return "";
-  }
-
-  return wordList[Math.floor(Math.random() * wordList.length)];
+  return utils.getRandomWordFromPredefined(wordLength);
 }
 
 app.get("/word", async (req, res) => {
-  //   const wordLength = 4; // Replace with the desired word length
   const { wordLength } = req.query;
-  console.log(parseInt(wordLength));
-
   try {
     const randomWord = await generateRandomWord(wordLength);
-    //res.send(`<h1>The target word is: ${randomWord}</h1>`);
     res.json(randomWord);
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "Unable to generate a random word." });
+    res
+      .status(500)
+      .json({ error: "Unable to connect.. Please try again later!" });
   }
+});
+
+//Function to check if a word is dictionary word
+app.get("/check-dictionary", (req, res) => {
+  const guess = req.query.word; // Get the word from the query parameter
+  const apiKey = process.env.API_KEY;
+  const dictApiUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${guess}?key=${apiKey}`;
+
+  axios
+    .get(dictApiUrl)
+    .then((response) => {
+      const data = response.data;
+
+      if (Array.isArray(data) && data.length > 0) {
+        const meta = data[0].meta;
+        console.log(meta);
+        if (meta && meta.id.includes(guess)) {
+          res.json({ status: "valid" });
+        } else {
+          res.json({ status: "invalid" });
+        }
+      } else {
+        res.json({ status: "not_found" });
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking word in dictionary:", error);
+      res.status(500).send("An error occurred while checking the dictionary.");
+    });
 });
 
 app.use(express.static("public"));
