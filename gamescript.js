@@ -29,26 +29,18 @@ const getSecret = async () => {
       `http://localhost:8000/word?wordLength=${wordLength}`
     );
     const json = await response.json();
-    secret = json;
-    console.log(secret);
+    const isValid = await checkWordInDictionary(json);
+    if (isValid) {
+      secret = json;
+      console.log(secret);
+    } else {
+      //Retry fetching a valid secret
+      await getSecret();
+    }
   } catch (err) {
     console.log(err);
   }
 };
-// function getSecret() {
-//   return fetch("/api/secret")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const secret = data.secret;
-//       return checkWordInDictionary(secret).then((valid) => {
-//         if (valid) {
-//           return secret; // Return valid secret
-//         } else {
-//           return getSecret(); // Retry fetching a new secret
-//         }
-//       });
-//     });
-// }
 
 getSecret();
 
