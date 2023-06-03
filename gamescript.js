@@ -22,15 +22,18 @@ const tilesGrid = document.querySelector(".tiles-grid");
 
 //fetching the secret word from backend
 let secret;
-const getSecret = () => {
-  fetch(`http://localhost:8000/word?wordLength=${wordLength}`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      secret = json;
-      // secret = json.toUpperCase();
-    })
-    .catch((err) => console.log(err));
+
+const getSecret = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/word?wordLength=${wordLength}`
+    );
+    const json = await response.json();
+    secret = json;
+    console.log(secret);
+  } catch (err) {
+    console.log(err);
+  }
 };
 getSecret();
 
@@ -176,66 +179,72 @@ const deleteLetter = () => {
   }
 };
 
+// Function to check the guessed word against the dictionary
+const checkWordInDictionary = async (word) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/check-dictionary/?word=${word}`
+    );
+    const json = await response.json();
+    return json.status === "valid";
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+};
+
 //Check guessed word
-const checkGuess = () => {
+const checkGuess = async () => {
   const guess = state.grid[state.currentRow].join("");
+
   if (state.currentTile > wordLength - 1) {
     disableEnterKey();
     disableDeleteKey();
-    //Function to check if guess is a dictionary word
-    fetch(`http://localhost:8000/check-dictionary/?word=${guess}`)
-      .then((response) => response.json())
-      .then((json) => {
-        // Add your code to handle the response here
-        if (json.status === "invalid") {
-          console.log("The guess is Invalid");
-          showMessage("Your Guess is Invalid");
-          return;
-        } else if (json.status === "valid") {
-          if (guess == secret) {
-            const cowBulls = getCowBulls(guess);
-            state.currentRow++;
-            displayCowBullImages(cowBulls);
-            isGameOver = true;
-            setTimeout(() => {
-              showGameOverModal(
-                "Congratulations! \u{1F389}",
-                `The word was '<span class="target-word">${secret}</span>'.`
-              );
-            }, 1000);
-            return;
-          } else {
-            //Handling last row of guess
-            if (state.currentRow >= guesses - 1) {
-              console.log("last guess.."); //added
-              console.log("Calling results on the last guess.."); //added
-              state.currentRow++; //added
-              const cowBulls = getCowBulls(guess); //added
-              displayCowBullImages(cowBulls); //added
-              isGameOver = true;
-              setTimeout(() => {
-                showGameOverModal(
-                  "Game Over \u{1F480}",
-                  `The word was '<span class="target-word">${secret}</span>'.`
-                );
-              }, 500);
 
-              return;
-            }
-            if (state.currentRow < guesses) {
-              state.currentRow++;
-              state.currentTile = 0;
-            }
-          }
-          const cowBulls = getCowBulls(guess);
-          displayCowBullImages(cowBulls);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    const isValid = await checkWordInDictionary(guess);
 
-    //Dictionary word check function ends here
+    if (!isValid) {
+      showMessage("Your Guess is Invalid");
+      return;
+    }
+
+    if (guess === secret) {
+      const cowBulls = getCowBulls(guess);
+      state.currentRow++;
+      displayCowBullImages(cowBulls);
+      isGameOver = true;
+      setTimeout(() => {
+        showGameOverModal(
+          "Congratulations! \u{1F389}",
+          `The word was '<span class="target-word">${secret}</span>'.`
+        );
+      }, 1000);
+      return;
+    }
+
+    if (state.currentRow >= guesses - 1) {
+      console.log("last guess..");
+      console.log("Calling results on the last guess..");
+      state.currentRow++;
+      const cowBulls = getCowBulls(guess);
+      displayCowBullImages(cowBulls);
+      isGameOver = true;
+      setTimeout(() => {
+        showGameOverModal(
+          "Game Over \u{1F480}",
+          `The word was '<span class="target-word">${secret}</span>'.`
+        );
+      }, 500);
+      return;
+    }
+
+    if (state.currentRow < guesses) {
+      state.currentRow++;
+      state.currentTile = 0;
+    }
+
+    const cowBulls = getCowBulls(guess);
+    displayCowBullImages(cowBulls);
   }
 };
 
@@ -348,13 +357,13 @@ const rulesButton = document.getElementById("rules-button");
 const closeRulesButton = document.getElementById("close-rules-modal");
 
 //functions to open & close modal
-function openRulesModal() {
+const openRulesModal = () => {
   rulesModal.style.display = "block";
-}
+};
 
-function closeRulesModal() {
+const closeRulesModal = () => {
   rulesModal.style.display = "none";
-}
+};
 
 // Open the modal when the "Game Rules" button is clicked
 rulesButton.addEventListener("click", openRulesModal);
@@ -367,16 +376,16 @@ window.addEventListener("click", function (event) {
 
 const gameOverModal = document.getElementById("game-over-modal");
 // Function to close the modal and navigate to the home page
-function closeModalAndNavigateToHomePage() {
+const closeModalAndNavigateToHomePage = () => {
   console.log("calling close modal and navigate to Home Page");
   gameOverModal.classList.add("hidden");
   setTimeout(() => {
     window.location.href = "index.html";
   }, 500);
-}
+};
 
 // Function to display the game-over modal with custom content
-function showGameOverModal(title, message) {
+const showGameOverModal = (title, message) => {
   const gameOverModalTitle = document.getElementById("game-over-modal-title");
   const gameOverModalMessage = document.getElementById(
     "game-over-modal-message"
@@ -396,17 +405,17 @@ function showGameOverModal(title, message) {
       closeModalAndNavigateToHomePage();
     }
   });
-}
+};
 
 //Handle Play Again Feature
-function closeModalAndPlayAgain() {
+const closeModalAndPlayAgain = () => {
   console.log("calling closeModal and Play Again");
   gameOverModal.style.display = "none";
   const queryParams = new URLSearchParams();
   queryParams.set("showGameOptionsModal", "true");
   const gameOptionsUrl = `index.html?${queryParams.toString()}`;
   window.location.href = gameOptionsUrl;
-}
+};
 const playAgainBtn = document.getElementById("game-over-play-again-button");
 playAgainBtn.addEventListener("click", closeModalAndPlayAgain);
 
