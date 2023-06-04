@@ -32,6 +32,7 @@ const getSecret = async () => {
     const isValid = await checkWordInDictionary(json);
     if (isValid) {
       secret = json;
+      enableKeyboard();
       console.log(secret);
     } else {
       //Retry fetching a valid secret
@@ -42,7 +43,7 @@ const getSecret = async () => {
   }
 };
 
-getSecret();
+// getSecret();
 
 let isGameOver = false;
 let isFirstTileFilled = false;
@@ -52,6 +53,21 @@ const state = {
   grid: [],
   currentRow: 0,
   currentTile: 0,
+};
+
+//Function to enable/disable virtual keyboard
+const disableKeyboard = () => {
+  const buttons = document.querySelectorAll("#keyboard-container button");
+  buttons.forEach((button) => {
+    button.classList.add("disabled");
+  });
+};
+
+const enableKeyboard = () => {
+  const buttons = document.querySelectorAll("#keyboard-container button");
+  buttons.forEach((button) => {
+    button.classList.remove("disabled");
+  });
 };
 
 // Function to disable Enter Key
@@ -143,7 +159,6 @@ const addLetter = (letter) => {
     );
     tile.textContent = letter;
     state.grid[state.currentRow][state.currentTile] = letter;
-    tile.setAttribute("data", letter); //to check for cow bull later
     state.currentTile++;
 
     // Update the isFirstTileFilled variable if the current tile is the first tile in the row
@@ -171,8 +186,6 @@ const deleteLetter = () => {
     );
     tile.textContent = "";
     state.grid[state.currentRow][state.currentTile] = "";
-    tile.setAttribute("data", ""); //to check for cow bull later
-
     // Disable the delete key if the row has no filled tiles
     const currentRowTiles = state.grid[state.currentRow];
     const hasFilledTiles = currentRowTiles.some((tile) => tile !== "");
@@ -203,6 +216,7 @@ const checkWordInDictionary = async (word) => {
 //Check guessed word
 const checkGuess = async () => {
   const guess = state.grid[state.currentRow].join("");
+  disableKeyboard();
 
   if (state.currentTile > wordLength - 1) {
     disableEnterKey();
@@ -214,7 +228,6 @@ const checkGuess = async () => {
       showMessage("Your Guess is Invalid");
       return;
     }
-
     if (guess === secret) {
       const cowBulls = getCowBulls(guess);
       state.currentRow++;
@@ -292,6 +305,7 @@ const displayCowBullImages = (cowBulls) => {
       cowsElement.appendChild(cowImg);
     });
   }
+  enableKeyboard();
 };
 
 //Game logic
@@ -329,11 +343,13 @@ const showMessage = (message) => {
   messageDisplay.append(messageElement);
   disableDeleteKey();
   disableEnterKey();
+  disableKeyboard();
   setTimeout(() => {
     messageDisplay.removeChild(messageElement);
     if (message === "Your Guess is Invalid") {
       deleteRowTiles(state.currentRow);
     }
+    enableKeyboard();
   }, 1500);
 };
 
@@ -354,7 +370,9 @@ const deleteRowTiles = (rowIndex) => {
 const startUp = () => {
   displayGameOptions();
   drawGrid();
+  disableKeyboard();
   registerKeyboardEvents();
+  getSecret();
 };
 startUp();
 
@@ -402,6 +420,8 @@ const showGameOverModal = (title, message) => {
   gameOverModalTitle.textContent = title;
   gameOverModalMessage.innerHTML = message;
   gameOverModal.classList.remove("hidden");
+
+  disableKeyboard();
 
   // Close modal and navigate to the home page when close symbol is clicked
   closeSymbol.addEventListener("click", closeModalAndNavigateToHomePage);
