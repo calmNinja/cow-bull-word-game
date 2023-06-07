@@ -19,13 +19,16 @@
   /* Header Styles */
   .header-container {
     background-color:#52b788 ;
-    border-radius: 1rem;
+    /* border-radius: 1rem; */
     color: rgb(237, 233, 233);
     padding: 0.5em 0.75em;
     text-align: center;
     margin: 0 2rem;
+    width: 100vw;
+    margin-left: -1rem;
+    box-sizing: border-box;
   }
-  
+
   .title {
     display: inline-block;
     font-size: 3em;
