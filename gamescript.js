@@ -33,6 +33,8 @@ const getSecret = async () => {
     if (isValid) {
       secret = json;
       enableKeyboard();
+      disableDeleteKey();
+      disableEnterKey();
       console.log(secret);
     } else {
       //Retry fetching a valid secret
@@ -199,6 +201,23 @@ const deleteLetter = () => {
   }
 };
 
+// Invalid Guess Styling
+const applyInvalidGuessStyle = (rowIndex) => {
+  const rowTiles = state.grid[rowIndex];
+  rowTiles.forEach((_, columnIndex) => {
+    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
+    tile.style.border = "2px solid red";
+  });
+};
+
+const removeInvalidGuessStyle = (rowIndex) => {
+  const rowTiles = state.grid[rowIndex];
+  rowTiles.forEach((_, columnIndex) => {
+    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
+    tile.style.border = "1px solid darkgreen"; // Set the original border style here
+  });
+};
+
 // Function to check the guessed word against the dictionary
 const checkWordInDictionary = async (word) => {
   try {
@@ -217,6 +236,8 @@ const checkWordInDictionary = async (word) => {
 const checkGuess = async () => {
   const guess = state.grid[state.currentRow].join("");
   disableKeyboard();
+  disableDeleteKey();
+  disableEnterKey();
 
   if (state.currentTile > wordLength - 1) {
     disableEnterKey();
@@ -226,6 +247,7 @@ const checkGuess = async () => {
 
     if (!isValid) {
       showMessage("Your Guess is Invalid");
+      applyInvalidGuessStyle(state.currentRow);
       return;
     }
     if (guess === secret) {
@@ -306,6 +328,8 @@ const displayCowBullImages = (cowBulls) => {
     });
   }
   enableKeyboard();
+  disableDeleteKey();
+  disableEnterKey();
 };
 
 //Game logic
@@ -348,8 +372,11 @@ const showMessage = (message) => {
     messageDisplay.removeChild(messageElement);
     if (message === "Your Guess is Invalid") {
       deleteRowTiles(state.currentRow);
+      removeInvalidGuessStyle(state.currentRow);
     }
     enableKeyboard();
+    disableDeleteKey();
+    disableEnterKey();
   }, 1500);
 };
 
