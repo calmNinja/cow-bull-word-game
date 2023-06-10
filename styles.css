@@ -283,37 +283,47 @@ body {
     line-height: 3.25rem;
   }
 
+  /* game options modal */
+  .modal-dialog {
+    /* Existing styles... */
+    margin: 20rem auto 0; /* Adjust vertical spacing */
+    max-width: 30rem; /* Make it narrower */
+    padding: 4rem 2.5rem;
+  }
+  
+  .modal-body {
+    /* Existing styles... */
+    padding: 1rem; /* Adjust padding */
+  }
+  
+  .modal-body label {
+    /* Existing styles... */
+    margin-bottom: 0.5rem; /* Adjust vertical spacing */
+  }
+  
+  .modal-body select {
+    /* Existing styles... */
+    margin-bottom: 1rem; /* Adjust vertical spacing */
+  }
+  
+  .modal-footer {
+    /* Existing styles... */
+    padding: 0.625rem 0; /* Adjust padding */
+  }
+  
+  .modal-footer .begin-button {
+    /* Existing styles... */
+    padding: 1rem; /* Adjust padding */
+    font-size: 1.2rem; /* Adjust font size */
+  }
+  
+  /* ends */
+
   .start-button {
     margin: 4rem auto 6rem;
   }
 
-  /* modal styling */
-  .modal-dialog {
-    max-width: 90%;
-    margin: 15% auto;
-  }
   
-  .modal-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .close-modal-button {
-    font-size: 2rem;
-  }
-  
-  .modal-body {
-    padding: 1rem;
-  }
-  
-  .modal-body select {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
-  
-  .modal-footer .begin-button {
-    padding: 0.8rem;
-    font-size: 1rem;
-  }
 
 }
 
