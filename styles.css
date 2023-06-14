@@ -67,7 +67,6 @@ body {
 .cow-animate {
   display: inline-block;
   animation: fall-from-top 2s ease-out forwards !important;
-  /* animation: wiggle 0.5s ease-in-out infinite; */
 }
 
 .bull-animate {
@@ -118,7 +117,7 @@ body {
 
 .rules-container p {
   font-size: 1.25rem;
-  padding: 0.25rem;
+  padding-bottom: 1rem;
 }
 
 .highlights {
@@ -180,6 +179,7 @@ body {
   padding: 2.5rem;
   max-width: 32rem;
   width: 90%;
+  position: relative; 
 }
 
 .modal-header {
@@ -187,6 +187,7 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
 }
 
 .modal-header h2 {
@@ -201,6 +202,10 @@ body {
   background: none;
   color: black;
   cursor: pointer;
+  position: absolute; 
+  top: 0.85rem;
+  right: 2rem; 
+
 }
 
 .close-modal-button:hover,
@@ -211,23 +216,24 @@ body {
 }
 
 .modal-body {
-  padding: 2rem;
+  padding: 2rem 0;
 }
 
 .modal-body label {
   display: block;
   margin-bottom: 1rem;
-  
 }
 
 .modal-body select {
   padding: .3rem;
   margin-bottom: 1.25rem;
+  width: 50%;
+  box-sizing: border-box;
 }
 
 .modal-footer {
   border-top: 1px solid #ddd;
-  padding: 0.625rem 0 0 0;
+  padding: 0.625rem 0;
   display: flex;
   justify-content: center;
 }
@@ -256,7 +262,6 @@ body {
 
 @media only screen and (max-width: 1024px) {
   body {
-    /* background-color: purple; */
     height: 100vh;
     width: 100vw;
     padding: 2rem 2rem 0 2rem;
@@ -282,45 +287,49 @@ body {
     font-size: 2rem;
     line-height: 3.25rem;
   }
-
-  .start-button {
-    margin: 4rem auto 6rem;
-  }
-
-  /* modal styling */
   .modal-dialog {
-    max-width: 90%;
-    margin: 15% auto;
-  }
-  
-  .modal-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .close-modal-button {
-    font-size: 2rem;
+    margin: 20rem auto 0; 
+    max-width: 30rem; 
+    padding: 4rem 3rem;
   }
   
   .modal-body {
-    padding: 1rem;
+    padding: 1rem 0;
+    font-size: 1.25rem;
+  }
+  
+  .modal-body label {
+    margin-bottom: 1rem; 
+   
   }
   
   .modal-body select {
-    padding: 0.5rem;
-    font-size: 0.9rem;
+    margin-bottom: 2rem; 
+    width: 50%;
+    box-sizing: border-box;
+  }
+  
+  .modal-footer {
+    padding: 0.625rem 0; 
   }
   
   .modal-footer .begin-button {
-    padding: 0.8rem;
-    font-size: 1rem;
+    margin-top: 2rem;
+    padding: 1rem; 
+    font-size: 1.2rem; 
   }
-
+  
+  .close-modal-button {
+    top: 1.25rem;
+  }
+  .start-button {
+    margin: 4rem auto 6rem;
+  }
 }
 
 
 /* Media queries for mobile screens */
 @media only screen and (max-width: 768px) {
-
   .header-container {
     margin: 0 1rem 1rem;
     padding: 2rem;
@@ -349,35 +358,46 @@ body {
     font-size: 1.5rem;
     line-height: 2.5rem;
   }
+  .rules-container p {
+    padding-bottom: 0;
+  }
   .start-button {
     font-size: 1.5rem;
     padding: 1rem;
   }
-  /* modal styling */
   .modal-dialog {
-    margin: 10% 5%;
-    max-width: 90%;
+    margin: 10rem auto 0;
+    max-width: 30rem;
+    padding: 4rem 3rem;
+  }
+  
+  .modal-body {
+    padding: 1rem 0;
+    font-size: 1.25rem;
+  }
+  
+  .modal-body label {
+    margin-bottom: 1rem;
   }
   
   .modal-body select {
-    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .modal-footer {
+    padding: 0.625rem 0;
   }
   
-  .modal-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .close-modal-button {
-    font-size: 30px;
+  .modal-footer .begin-button {
+    margin-top: 2rem;
+    padding: 1rem;
+    font-size: 1.2rem;
   }
 }
 
 /* Media queries for small mobile screens */
 @media only screen and (max-width: 480px) {
   body {
-    /* background-color: palevioletred; */
     padding: 0;
-    
   }
   .header-container {
     margin: 2rem 0;
@@ -405,33 +425,46 @@ body {
     font-size: 1rem;
     line-height: 1.85rem;
   }
+  .rules-container p {
+    font-size: 0.75rem;
+  }
   .start-button {
     font-size: 1.2rem;
     padding: 0.75rem;
     margin-top: 1.5rem;
   }
-  /* modal styling */
   .modal-dialog {
-    margin: 30px auto;
-    max-width: 90%;
+    margin: 6rem auto 0;
+    max-width: 20rem;
+    padding: 5rem 3rem;
   }
   
-  .modal-header h2 {
-    font-size: 1.8rem;
+  .modal-body {
+    padding: 1.5rem 0;
+    font-size: 1rem;
   }
   
   .modal-body label {
-    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
   }
   
   .modal-body select {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 2.5rem;
+    width: 100%;
+  }
+  .modal-footer {
+    padding: 0.625rem 0;
   }
   
   .modal-footer .begin-button {
-    font-size: 1.2rem;
-    padding: 0.8rem;
+    margin-top: 2.5rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .close-modal-button {
+    top: 1.75rem;
+    right: 1.75rem;
   }
 }
 
