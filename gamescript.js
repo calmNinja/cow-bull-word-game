@@ -299,27 +299,34 @@ const displayCowBullImages = (cowBulls) => {
   const cowsElement = document.querySelector(
     `#tileRow-${state.currentRow} .cows`
   );
-  //Clear existing content
+  // Clear existing content
   bullsElement.innerHTML = "";
   cowsElement.innerHTML = "";
 
-  if (cowBulls.bulls === 0 && cowBulls.cows === 0) {
-    // Append a message or symbol indicating no cows and no bulls
+  if (cowBulls.bulls === 0 || cowBulls.bulls === "none") {
+    // Append a message or symbol indicating no bulls
     const noneElement = document.createElement("span");
     noneElement.textContent = "None";
     noneElement.classList.add("none-message");
     bullsElement.appendChild(noneElement);
-    cowsElement.appendChild(noneElement.cloneNode(true));
   } else {
-    //Append bulls images
+    // Append bulls images
     Array.from({ length: cowBulls.bulls }).forEach(() => {
       const bullImg = document.createElement("img");
       bullImg.src = "./bull-icon.png";
       bullImg.classList.add("bull-image");
       bullsElement.appendChild(bullImg);
     });
+  }
 
-    //Append cow images
+  if (cowBulls.cows === 0 || cowBulls.cows === "none") {
+    // Append a message or symbol indicating no cows
+    const noneElement = document.createElement("span");
+    noneElement.textContent = "None";
+    noneElement.classList.add("none-message");
+    cowsElement.appendChild(noneElement);
+  } else {
+    // Append cow images
     Array.from({ length: cowBulls.cows }).forEach(() => {
       const cowImg = document.createElement("img");
       cowImg.src = "./cow-icon.png";
@@ -327,6 +334,7 @@ const displayCowBullImages = (cowBulls) => {
       cowsElement.appendChild(cowImg);
     });
   }
+
   enableKeyboard();
   disableDeleteKey();
   disableEnterKey();
@@ -355,8 +363,17 @@ const getCowBulls = (guess) => {
       secretCopy[index] = "";
     }
   }
-
-  return { cows, bulls };
+  // Handle case for only cows or only bulls
+  if (bulls === 0 && cows === 0) {
+    return { cows: "none", bulls: "none" };
+  } else if (bulls === 0) {
+    return { cows: cows, bulls: "none" };
+  } else if (cows === 0) {
+    return { cows: "none", bulls: bulls };
+  } else {
+    return { cows, bulls };
+  }
+  // return { cows, bulls };
 };
 
 const messageDisplay = document.querySelector(".message-container");
