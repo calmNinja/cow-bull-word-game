@@ -161,7 +161,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: max-content;
+  /* width: max-content; */
   /* width: 500px; */
 }
 
@@ -296,17 +296,21 @@
   background-color: #fefefe;
   color: black;
   margin: 15% auto; 
-  padding: 2rem;
+  padding: 3.5rem 2rem 2rem;
   border: 1px solid #888;
   width: 80%; 
   line-height: 1.5rem;
+  position: relative;
 }
 .rules-modal-content h3 {
   margin-bottom: 1rem;
 }
 #close-rules-modal {
   color: rgb(233, 31, 65);
-  float: right;
+  /* float: right; */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   font-size: 2rem;
   font-weight: bold;
 }
@@ -470,7 +474,7 @@ footer {
   }
   .reference-container {
     padding: 1.75rem;
-    background-color: yellow;
+    /* background-color: yellow; */
   }
   /* Game Options Container */
   .game-options-container,
@@ -492,7 +496,7 @@ footer {
     margin-bottom: 2rem;
   }
   .rules-modal-content {
-    padding: 3rem;
+    padding: 4.5rem 4rem 3rem;
     width: 80%;
     line-height: 2.75rem;
     font-size: 1.5rem;
@@ -503,6 +507,7 @@ footer {
   }
   #close-rules-modal {
     font-size: 3rem;
+    top: 2rem;
   }
   .rules-modal-content p {
     margin-top: 1.5rem;
@@ -511,20 +516,23 @@ footer {
   .content-container {
     max-width: 100%;
     /* margin: 2rem auto 5rem; */
+    overflow-x: auto;
+    white-space: nowrap;
   }
   #game-container {
+    background-color: lime;
     justify-content: center;
     width: 100%;
     overflow: hidden;
     padding: 0 1rem;
   }
   .tiles-grid {
-    max-width: none;
-    overflow-x: auto;
-    white-space: nowrap;
+    max-height: 800px;
+    overflow-y: auto;
+    flex-wrap: wrap;
   }
   .tile-row {
-    width: max-content;
+    /* width: max-content; */
   }
   #keyboard-container {
     margin-bottom: 2.5rem;
@@ -535,3 +543,4 @@ footer {
     line-height: 2rem;
   }
 }
+
