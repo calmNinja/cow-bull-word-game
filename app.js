@@ -1,82 +1,84 @@
-// Title animation script
-const cowAnimate = document.querySelector(".cow-animate");
-cowAnimate.addEventListener("animationend", function () {
-  this.classList.add("done");
-});
+const utils = require("./utils");
+const axios = require("axios").default;
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const PORT = process.env.PORT || 3000;
+const app = express();
+app.use(cors());
 
-// Game Options modal script
-const playBtn = document.querySelector(".start-button");
-const modal = document.querySelector(".modal");
-const closeModalBtn = document.querySelector(".close-modal-button");
-const modalDialog = document.querySelector(".modal-dialog");
-const beginBtn = document.querySelector(".begin-button");
+// Maximum number of attempts to find a unique word
+const maxAttempts = 10;
 
-const PAUSED_CLASS = "paused";
-
-// function to open the modal
-function openModal() {
-  modal.classList.add("open");
-  document.body.style.overflow = "hidden";
-  playBtn.classList.add(PAUSED_CLASS);
+// Function to check if a word has unique letters
+function hasUniqueLetters(word) {
+  const uniqueLetters = new Set(word);
+  return uniqueLetters.size === word.length;
 }
 
-// function to close the modal
-function closeModal() {
-  modal.classList.remove("open");
-  document.body.style.overflow = "auto";
-  playBtn.classList.remove(PAUSED_CLASS);
+// Function to generate a random word from the API
+async function generateRandomWord(wordLength) {
+  const randomWordApiUrl = `https://random-word-api.herokuapp.com/word?number=1&length=${wordLength}`;
+
+  try {
+    const response = await axios.get(randomWordApiUrl);
+    const randomWord = response.data[0];
+
+    if (hasUniqueLetters(randomWord)) {
+      return randomWord;
+    }
+  } catch (error) {
+    console.error("Error fetching random word:", error);
+    throw error;
+  }
+
+  return utils.getRandomWordFromPredefined(wordLength);
 }
 
-playBtn.addEventListener("click", openModal);
-
-closeModalBtn.addEventListener("click", closeModal);
-
-beginBtn.addEventListener("click", closeModal);
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    closeModal();
+app.get("/word", async (req, res) => {
+  const { wordLength } = req.query;
+  try {
+    const randomWord = await generateRandomWord(wordLength);
+    res.json(randomWord);
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ error: "Unable to connect.. Please try again later!" });
   }
 });
 
-window.addEventListener("click", function (event) {
-  if (event.target === modal) {
-    closeModal();
-  }
+//Function to check if a word is dictionary word
+app.get("/check-dictionary", (req, res) => {
+  const guess = req.query.word; // Get the word from the query parameter
+  const apiKey = process.env.API_KEY;
+  const dictApiUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${guess}?key=${apiKey}`;
+
+  axios
+    .get(dictApiUrl)
+    .then((response) => {
+      const data = response.data;
+
+      if (Array.isArray(data) && data.length > 0) {
+        const meta = data[0].meta;
+        console.log(meta);
+        if (meta && meta.id.includes(guess)) {
+          res.json({ status: "valid" });
+        } else {
+          res.json({ status: "invalid" });
+        }
+      } else {
+        res.json({ status: "not_found" });
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking word in dictionary:", error);
+      res.status(500).send("An error occurred while checking the dictionary.");
+    });
 });
 
-// Game begins
-beginBtn.addEventListener("click", () => {
-  //Get the Game Option values
-  const wordLengthSelect = document.querySelector("#word-length");
-  const difficultySelect = document.querySelector("#difficulty");
-  const wordLength = encodeURIComponent(wordLengthSelect.value);
-  const difficulty = encodeURIComponent(difficultySelect.value);
+app.use(express.static("public"));
 
-  let guesses;
-  switch (difficulty) {
-    case "Easy":
-      guesses = 12;
-      break;
-    case "Medium":
-      guesses = 10;
-      break;
-    case "Hard":
-      guesses = 8;
-      break;
-  }
-  const gameOptionsUrl = `game.html?wordLength=${wordLength}&difficulty=${difficulty}&guesses=${guesses}`;
-  // const url =
-  //   "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty`;
-  window.location.href = gameOptionsUrl;
-});
-
-//Handle Play Again button from game.html
-// Check if the URL has the parameter "showGameOptionsModal" set to "true"
-const urlParams = new URLSearchParams(window.location.search);
-const showGameOptionsModal = urlParams.get("showGameOptionsModal");
-
-// If the parameter is set to "true", display the game options modal
-if (showGameOptionsModal === "true") {
-  openModal();
-}
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
