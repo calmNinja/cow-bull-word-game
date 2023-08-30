@@ -1,4 +1,4 @@
-import { handleClick } from "./gameLogic";
+import { handleClick } from "./inputHandler";
 
 export const registerKeyboardEvents = () => {
   const keys = document.querySelectorAll(".keyboard-row button");
@@ -21,22 +21,18 @@ export const enableKeyboard = () => {
   });
 };
 
-// Function to disable Enter Key
-
 export const disableEnterKey = () => {
   const enterKey = document.getElementById("enterKey");
   enterKey.classList.add("disabled");
   enterKey.disabled = true;
 };
 
-//Function to disable Delete Key
 const deleteKey = document.getElementById("deleteKey");
 export const disableDeleteKey = () => {
   deleteKey.classList.add("disabled");
   deleteKey.disabled = true;
 };
 
-//Function to enable Delete Key
 export const enableDeleteKey = () => {
   deleteKey.classList.remove("disabled");
   deleteKey.disabled = false;

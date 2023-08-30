@@ -6,6 +6,7 @@ export const state = {
   currentRow: 0,
   currentTile: 0,
 };
+//Generate the word guessing grid
 export const drawGrid = (wordLength, guesses) => {
   for (let i = 0; i < guesses; i++) {
     //Create a tile row

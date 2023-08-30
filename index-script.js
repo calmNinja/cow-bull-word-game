@@ -66,8 +66,6 @@ beginBtn.addEventListener("click", () => {
       break;
   }
   const gameOptionsUrl = `game.html?wordLength=${wordLength}&difficulty=${difficulty}&guesses=${guesses}`;
-  // const url =
-  //   "game.html?wordLength=" + wordLength + "&difficulty=" + difficulty`;
   window.location.href = gameOptionsUrl;
 });
 

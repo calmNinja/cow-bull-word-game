@@ -3,7 +3,6 @@ const rulesModal = document.getElementById("rules-modal");
 const rulesButton = document.getElementById("rules-button");
 const closeRulesButton = document.getElementById("close-rules-modal");
 
-//functions to open & close modal
 const openRulesModal = () => {
   rulesModal.style.display = "block";
 };
@@ -22,17 +21,14 @@ window.addEventListener("click", function (event) {
 });
 
 const gameOverModal = document.getElementById("game-over-modal");
-// Function to close the modal and navigate to the home page
 const closeModalAndNavigateToHomePage = () => {
-  console.log("calling close modal and navigate to Home Page");
   gameOverModal.classList.add("hidden");
   setTimeout(() => {
     window.location.href = "index.html";
   }, 500);
 };
 
-// Function to display the game-over modal with custom content
-const showGameOverModal = (title, message) => {
+export const showGameOverModal = (title, message) => {
   const gameOverModalTitle = document.getElementById("game-over-modal-title");
   const gameOverModalMessage = document.getElementById(
     "game-over-modal-message"
@@ -58,7 +54,6 @@ const showGameOverModal = (title, message) => {
 
 //Handle Play Again Feature
 const closeModalAndPlayAgain = () => {
-  console.log("calling closeModal and Play Again");
   gameOverModal.style.display = "none";
   const queryParams = new URLSearchParams();
   queryParams.set("showGameOptionsModal", "true");
@@ -72,10 +67,8 @@ playAgainBtn.addEventListener("click", closeModalAndPlayAgain);
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
     if (!gameOverModal.classList.contains("hidden")) {
-      console.log("Trying to escape from Game Over Modal");
       closeModalAndNavigateToHomePage();
     } else if (rulesModal.style.display != "none") {
-      console.log("Trying to escape from rules modal");
       closeRulesModal();
     }
   }

@@ -1,76 +1,19 @@
-import {
-  enableDeleteKey,
-  disableDeleteKey,
-  disableEnterKey,
-} from "./keyboardEvents";
 import { secret, checkWordInDictionary } from "./fetchSecret";
 import { state } from "./drawGrid";
-import { wordLength, guesses } from "./gamescript";
+import {
+  disableDeleteKey,
+  disableEnterKey,
+  disableKeyboard,
+} from "./keyboardEvents";
 import { showGameOverModal } from "./modalEvents";
+import {
+  showMessage,
+  applyInvalidGuessStyle,
+  displayCowBullImages,
+} from "./gameLogicUtils";
+import { wordLength, guesses } from "./gamescript";
 
 let isGameOver = false;
-let isFirstTileFilled = false;
-
-export const handleClick = (event) => {
-  const letter = event.target.getAttribute("data-key");
-  //Handle different keys
-  if (letter === "Backspace") {
-    deleteLetter();
-    return;
-  }
-  if (letter === "Enter") {
-    checkGuess();
-    return;
-  }
-  //Finally update the tile with the letter
-  addLetter(letter);
-};
-
-export const addLetter = (letter) => {
-  if (state.currentTile < wordLength && state.currentRow < guesses) {
-    const tile = document.getElementById(
-      `tile-${state.currentRow}-${state.currentTile}`
-    );
-    tile.textContent = letter;
-    state.grid[state.currentRow][state.currentTile] = letter;
-    state.currentTile++;
-
-    // Update the isFirstTileFilled variable if the current tile is the first tile in the row
-    // Enable the delete key once the first tile is filled
-    if (state.currentTile === 1) {
-      isFirstTileFilled = true;
-      enableDeleteKey();
-    }
-
-    // Check if the row is full and enable the enter key
-    if (state.currentTile == wordLength) {
-      const enterKey = document.getElementById("enterKey");
-      enterKey.classList.remove("disabled");
-      enterKey.disabled = false;
-    }
-  }
-};
-
-export const deleteLetter = () => {
-  if (state.currentTile > 0) {
-    state.currentTile--;
-    const tile = document.getElementById(
-      `tile-${state.currentRow}-${state.currentTile}`
-    );
-    tile.textContent = "";
-    state.grid[state.currentRow][state.currentTile] = "";
-    // Disable the delete key if the row has no filled tiles
-    const currentRowTiles = state.grid[state.currentRow];
-    const hasFilledTiles = currentRowTiles.some((tile) => tile !== "");
-    if (!hasFilledTiles || !isFirstTileFilled) {
-      disableDeleteKey();
-    } else {
-      enableDeleteKey();
-    }
-    // Disable the enter key if the row is not full
-    disableEnterKey();
-  }
-};
 
 export const checkGuess = async () => {
   const guess = state.grid[state.currentRow].join("");
@@ -104,8 +47,6 @@ export const checkGuess = async () => {
     }
 
     if (state.currentRow >= guesses - 1) {
-      console.log("last guess..");
-      console.log("Calling results on the last guess..");
       state.currentRow++;
       const cowBulls = getCowBulls(guess);
       displayCowBullImages(cowBulls);
@@ -161,104 +102,4 @@ export const getCowBulls = (guess) => {
   } else {
     return { cows, bulls };
   }
-  // return { cows, bulls };
-};
-
-export const displayCowBullImages = (cowBulls) => {
-  console.log("calling displayCowBullImages function for result..");
-  const bullsElement = document.querySelector(
-    `#tileRow-${state.currentRow} .bulls`
-  );
-  const cowsElement = document.querySelector(
-    `#tileRow-${state.currentRow} .cows`
-  );
-  // Clear existing content
-  bullsElement.innerHTML = "";
-  cowsElement.innerHTML = "";
-
-  if (cowBulls.bulls === 0 || cowBulls.bulls === "none") {
-    // Append a message or symbol indicating no bulls
-    const noneElement = document.createElement("span");
-    noneElement.textContent = "None";
-    noneElement.classList.add("none-message");
-    bullsElement.appendChild(noneElement);
-  } else {
-    // Append bulls images
-    Array.from({ length: cowBulls.bulls }).forEach(() => {
-      const bullImg = document.createElement("img");
-      bullImg.src = "/assets/bull-icon.png";
-      bullImg.classList.add("bull-image");
-      bullsElement.appendChild(bullImg);
-    });
-  }
-
-  if (cowBulls.cows === 0 || cowBulls.cows === "none") {
-    // Append a message or symbol indicating no cows
-    const noneElement = document.createElement("span");
-    noneElement.textContent = "None";
-    noneElement.classList.add("none-message");
-    cowsElement.appendChild(noneElement);
-  } else {
-    // Append cow images
-    Array.from({ length: cowBulls.cows }).forEach(() => {
-      const cowImg = document.createElement("img");
-      cowImg.src = "/assets/cow-icon.png";
-      cowImg.classList.add("cow-image");
-      cowsElement.appendChild(cowImg);
-    });
-  }
-
-  enableKeyboard();
-  disableDeleteKey();
-  disableEnterKey();
-};
-
-export const applyInvalidGuessStyle = (rowIndex) => {
-  const rowTiles = state.grid[rowIndex];
-  rowTiles.forEach((_, columnIndex) => {
-    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
-    tile.style.border = "2px solid red";
-  });
-};
-
-export const removeInvalidGuessStyle = (rowIndex) => {
-  const rowTiles = state.grid[rowIndex];
-  rowTiles.forEach((_, columnIndex) => {
-    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
-    tile.style.border = "1px solid darkgreen"; // Set the original border style here
-  });
-};
-
-const messageDisplay = document.querySelector(".message-container");
-
-export const showMessage = (message) => {
-  const messageElement = document.createElement("p");
-  messageElement.textContent = message;
-  messageDisplay.append(messageElement);
-  disableDeleteKey();
-  disableEnterKey();
-  disableKeyboard();
-  setTimeout(() => {
-    messageDisplay.removeChild(messageElement);
-    if (message === "Your Guess is Invalid") {
-      deleteRowTiles(state.currentRow);
-      removeInvalidGuessStyle(state.currentRow);
-    }
-    enableKeyboard();
-    disableDeleteKey();
-    disableEnterKey();
-  }, 1500);
-};
-
-// Function to delete the letters in the given row
-export const deleteRowTiles = (rowIndex) => {
-  const rowTiles = state.grid[rowIndex];
-  rowTiles.forEach((_, columnIndex) => {
-    const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
-    tile.textContent = "";
-    state.grid[rowIndex][columnIndex] = "";
-  });
-  disableDeleteKey();
-  disableEnterKey();
-  state.currentTile = 0;
 };

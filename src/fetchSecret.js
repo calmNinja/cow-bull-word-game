@@ -4,7 +4,7 @@ import {
   disableEnterKey,
 } from "./keyboardEvents.js";
 
-//pass secret from gameScript.js
+//fetch secret word from backend
 export let secret;
 export const getSecret = async (wordLength) => {
   try {
@@ -18,7 +18,7 @@ export const getSecret = async (wordLength) => {
       enableKeyboard();
       disableDeleteKey();
       disableEnterKey();
-      console.log(secret);
+      //console.log(secret); //for testing
     } else {
       //Retry fetching a valid secret
       await getSecret(wordLength);
