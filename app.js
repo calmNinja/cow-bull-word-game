@@ -1,6 +1,7 @@
 const utils = require("./utils");
 const axios = require("axios").default;
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
@@ -77,7 +78,7 @@ app.get("/check-dictionary", (req, res) => {
     });
 });
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
