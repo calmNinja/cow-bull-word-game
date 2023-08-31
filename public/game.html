@@ -173,11 +173,17 @@
           <br />
           Web Page Developed by
           <a href="https://github.com/calmNinja?tab=repositories">calmNinja</a>
-          &copy; 2023. All rights reserved.
+          &copy; <span id="current-year"></span>. All rights reserved.
         </p>
       </div>
     </footer>
     <!-- Footer Ends -->
+    <script>
+      const currentYear = new Date().getFullYear();
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("current-year").textContent = currentYear;
+      });
+    </script>
     <script type="module" src="js/bundle.js"></script>
   </body>
 </html>
