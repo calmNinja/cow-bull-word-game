@@ -6,8 +6,9 @@
 
 body {
   height: 100vh;
-  font-family: Arial, sans-serif;
-  background-color: #b7e4c7;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400;
+  background-color: #b7e4c7; 
   color:rgb(237, 233, 233);
   padding: 1rem;
   overflow-x: hidden;
@@ -21,6 +22,7 @@ body {
   padding: 1.25em;
   text-align: center;
   margin: 0 2rem 2rem;
+  font-weight: 700;
 }
 
 .title {
@@ -83,7 +85,7 @@ body {
 
 .subtitle {
   font-size: 2em;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 /* Game Rules Styling */
@@ -97,6 +99,7 @@ body {
 
 .rules-container h3 {
   font-size: 3rem;
+  font-weight: 400;
   text-align: center;
   text-decoration: underline;
   color: darkgreen;
@@ -152,7 +155,8 @@ body {
 
 .start-button:hover {
   animation-play-state: paused;
-  background-color: darkgreen;
+  background-color: white;
+  color:#bf0603;
 }
 
 .start-button.paused {

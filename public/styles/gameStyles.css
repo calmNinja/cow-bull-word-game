@@ -7,8 +7,9 @@
   }
   
   body {
-    height: 100vh;
+    max-height: 100vh;
     font-family: Arial, sans-serif;
+    font-family: 'Roboto Slab', serif;
     background-color: #b7e4c7;
     color:rgb(237, 233, 233);
     padding: 0 1rem;
@@ -291,7 +292,7 @@
   padding: 3.5rem 2rem 2rem;
   border: 1px solid #888;
   width: 80%; 
-  line-height: 1.5rem;
+  line-height: 2rem;
   position: relative;
 }
 .rules-modal-content h3 {
