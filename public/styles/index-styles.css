@@ -155,8 +155,8 @@ body {
 
 .start-button:hover {
   animation-play-state: paused;
-  background-color: white;
-  color:#bf0603;
+  background-color: #cc2613;
+  color:white;
 }
 
 .start-button.paused {

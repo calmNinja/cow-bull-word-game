@@ -107,7 +107,7 @@
   margin-bottom: 1rem;
 }
 
-#rules-button {
+#rules-button, #quit-button {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     background-color: #ff477e;
@@ -119,8 +119,9 @@
   color: #fefefe;
 }
 #rules-button:hover {
-  background-color: darkgreen;
+  background-color: #ff81b3;
 }
+
 
 /* Scrollable Content Container */
 .content-container {
@@ -139,7 +140,8 @@
 
 #game-container {  
    display: flex;
-   background-color: #d3d3d3;
+   /* background-color: #d3d3d3; */
+   background-color: #7cbf7e;
    margin: 0 auto;
    justify-content: flex-start;
    width: 800px;
@@ -238,6 +240,25 @@
 .invalid-guess {
   border: 2px solid red !important;
 }
+
+/* Quit button styling */
+.quit-button-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#quit-button {
+  margin: 0 0.25rem;
+  background-color: rgb(31, 65, 233);
+  color:white;
+  padding: 1rem 1.25rem;
+}
+
+#quit-button:hover {
+  background-color: rgb(31, 125, 233);
+}
+ 
 
 /* Styling cow bull */
 /* Placeholders */
@@ -492,6 +513,10 @@ footer {
   .rules-modal-content p {
     margin-top: 1.5rem;
   }
+  #quit-button {
+    font-size: 1.25rem;
+  }
+ 
   /* Game container */
   .content-container {
     max-width: 100%;
@@ -556,6 +581,14 @@ footer {
     padding:0.5rem;
     margin-bottom: 0;
   }
+  .quit-button-container {
+    margin:0;
+  }
+  #quit-button {
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+    font-size: 1rem;
+  }
   .message-container {
     font-size: 0.75rem;
     margin-top: 0;
@@ -577,7 +610,7 @@ footer {
     font-size: 2rem;
   }
   .rules-modal-content p {
-        margin-top: 1rem;
+    margin-top: 1rem;
   }
  .content-container {
   background-color: white;
