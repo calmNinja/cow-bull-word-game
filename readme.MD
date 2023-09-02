@@ -1,6 +1,10 @@
-# CowBull
+<div style="background-color: #B10039; padding: 10px 0; text-align: center;">
+  <h1 style="font-size: 36px; margin-bottom: 5px; color: white;">CowBull - A Word Guessing Game</h1>
+</div>
 
+<br>
 CowBull is a word guessing game built using HTML, CSS, Vanilla JavaScript, Node.js, Express, Webpack, and Babel.
+<br>
 
 ## Overview
 
@@ -8,34 +12,44 @@ CowBull is a fun word guessing game where players try to guess a secret word by 
 
 ## Demo
 
-<p align="center"><em>Main Game Page</em></p>
+Here are a few screenshots from the CowBull game page:
+
+### Screenshots
+
+
 <div align="center">
+  <p style="text-decoration: underline;">Main Game Page</p>
   <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
 </div>
 
 
-<p align="center"><em>Game Options Modal</em></p>
+
 <div align="center">
+  <p "text-decoration: underline;">Game Options Modal</p>
   <img src="/screenshots/game-options-display.png" alt="Game Options Modal" width="500">
 </div>
 
-<p align="center"><em>Game Guessing Grid with virtual keyboard and result display</em></p>
+
 <div align="center">
+  <p "text-decoration: underline;">Game Guessing Grid with virtual keyboard and result display</p>
   <img src="/screenshots/guessing-grid.png" alt="Game Guessing Grid with virtual keyboard and result display" width="500">
 </div>
 
-<p align="center"><em>Responsive Layout for Game Grid Page</em></p>
+
 <div align="center">
+  <p "text-decoration: underline;">Responsive Layout for Game Grid Page</p>
   <img src="/screenshots/responsive-gamegrid.png" alt="Responsive Layout for Game Grid Page" width="500">
 </div>
 
-<p align="center"><em>Game Rules Reference Modal</em></p>
+
 <div align="center">
+  <p "text-decoration: underline;">Game Rules Reference Modal</p>
   <img src="/screenshots/game-rules-modal.png" alt="Game Rules Reference Modal" width="500">
 </div>
 
-<p align="center"><em>Winning Game Modal</em></p>
+
 <div align="center">
+  <p "text-decoration: underline;">Winning Game Modal</p>
   <img src="/screenshots/game-winning-modal.png" alt="Winning Game Modal" width="500">
 </div>
 
