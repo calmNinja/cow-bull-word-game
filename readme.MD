@@ -16,7 +16,7 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p><em>Main Game Page</em></p>
+  **Main Game Page**
   <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
 </div>
 
