@@ -1,5 +1,5 @@
 import { secret, checkWordInDictionary } from "./fetchSecret";
-import { state } from "./drawGrid";
+import { state, scrollToAddTileRow } from "./drawGrid";
 import {
   disableDeleteKey,
   disableEnterKey,
@@ -13,6 +13,7 @@ import {
 } from "./gameLogicUtils";
 import { wordLength, guesses } from "./gamescript";
 
+let hasScrolled = false;
 let isGameOver = false;
 
 export const checkGuess = async () => {
@@ -63,6 +64,13 @@ export const checkGuess = async () => {
     if (state.currentRow < guesses) {
       state.currentRow++;
       state.currentTile = 0;
+      if (!hasScrolled) {
+        const halfwayPoint = Math.floor(guesses / 2);
+        if (state.currentRow >= halfwayPoint) {
+          scrollToAddTileRow();
+          hasScrolled = true;
+        }
+      }
     }
 
     const cowBulls = getCowBulls(guess);

@@ -44,3 +44,12 @@ export const drawGrid = (wordLength, guesses) => {
   //Append Tiles Grid to the Game Container
   gameContainer.appendChild(tilesGrid);
 };
+
+export const scrollToAddTileRow = () => {
+  const tileRowId = `tileRow-${state.currentRow + 1}`;
+  const tileRowElement = document.getElementById(tileRowId);
+
+  if (tileRowElement) {
+    tileRowElement.scrollIntoView({ behavior: "smooth" });
+  }
+};

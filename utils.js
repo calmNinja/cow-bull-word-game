@@ -73,9 +73,7 @@ module.exports.getRandomWordFromPredefined = (wordLength) => {
       wordList = module.exports.random6;
       break;
     default:
-      return res
-        .status(404)
-        .send("Something went wrong.. Please try again later!");
+      throw new Error("Invalid word length");
   }
 
   return wordList[Math.floor(Math.random() * wordList.length)];

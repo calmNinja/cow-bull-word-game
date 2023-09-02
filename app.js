@@ -43,9 +43,7 @@ app.get("/word", async (req, res) => {
     res.json(randomWord);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ error: "Unable to connect.. Please try again later!" });
+    res.status(400).json({ error: "Invalid word length" });
   }
 });
 

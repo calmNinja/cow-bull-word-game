@@ -1,4 +1,5 @@
 import { disableKeyboard } from "./keyboardEvents";
+import { secret } from "./fetchSecret";
 const rulesModal = document.getElementById("rules-modal");
 const rulesButton = document.getElementById("rules-button");
 const closeRulesButton = document.getElementById("close-rules-modal");
@@ -72,4 +73,13 @@ document.addEventListener("keydown", function (event) {
       closeRulesModal();
     }
   }
+});
+
+//Quit modal
+const quitButton = document.getElementById("quit-button");
+quitButton.addEventListener("click", () => {
+  showGameOverModal(
+    "Good effort! \u{1F44D}",
+    `The word was '<span class="target-word">${secret}</span>'.`
+  );
 });

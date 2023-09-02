@@ -1,4 +1,5 @@
-import { handleClick } from "./inputHandler";
+import { handleClick, addLetter, deleteLetter } from "./inputHandler";
+import { checkGuess } from "./gameLogic";
 
 export const registerKeyboardEvents = () => {
   const keys = document.querySelectorAll(".keyboard-row button");
@@ -37,3 +38,17 @@ export const enableDeleteKey = () => {
   deleteKey.classList.remove("disabled");
   deleteKey.disabled = false;
 };
+
+// Function to handle input from physical keyboard
+export const handleKeyDown = (event) => {
+  const letter = event.key;
+  if (/^[a-zA-Z]$/.test(letter)) {
+    addLetter(letter.toLowerCase());
+  } else if (event.key === "Enter") {
+    checkGuess();
+  } else if (event.key === "Backspace") {
+    deleteLetter();
+  }
+};
+//Listening for input from physical keyboard
+document.addEventListener("keydown", handleKeyDown);

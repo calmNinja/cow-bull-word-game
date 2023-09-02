@@ -9,7 +9,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -149,7 +154,10 @@
       </div>
     </div>
     <!-- Virtual Keyboard Ends -->
-
+    <!-- Quit button -->
+    <div class="quit-button-container">
+      <button id="quit-button">QUIT</button>
+    </div>
     <div id="game-over-modal" class="game-over-modal hidden">
       <div class="game-over-modal-content">
         <span id="close-game-over-modal" class="close-symbol">&times;</span>
@@ -173,11 +181,17 @@
           <br />
           Web Page Developed by
           <a href="https://github.com/calmNinja?tab=repositories">calmNinja</a>
-          &copy; 2023. All rights reserved.
+          &copy; <span id="current-year"></span>. All rights reserved.
         </p>
       </div>
     </footer>
     <!-- Footer Ends -->
+    <script>
+      const currentYear = new Date().getFullYear();
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("current-year").textContent = currentYear;
+      });
+    </script>
     <script type="module" src="js/bundle.js"></script>
   </body>
 </html>
