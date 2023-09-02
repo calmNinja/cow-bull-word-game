@@ -16,7 +16,7 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p>Main Game Page</p>
+  <p><strong>Main Game Page</strong></p>
   <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
 </div>
 <br>
@@ -24,28 +24,28 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p>Game Options Modal</p>
+  <p><strong>Game Options Modal</strong></p>
   <img src="/screenshots/game-options-display.png" alt="Game Options Modal" width="500">
 </div>
 <br>
 
 
 <div align="center">
-  <p>Game Guessing Grid with virtual keyboard and result display</p>
+  <p><strong>Game Guessing Grid with virtual keyboard and result display</strong></p>
   <img src="/screenshots/guessing-grid.png" alt="Game Guessing Grid with virtual keyboard and result display" width="500">
 </div>
 <br>
 
 
 <div align="center">
-  <p>Responsive Layout for Game Grid Page</p>
+  <p><strong>Responsive Layout for Game Grid Page</strong></p>
   <img src="/screenshots/responsive-gamegrid.png" alt="Responsive Layout for Game Grid Page" width="500">
 </div>
 <br>
 
 
 <div align="center">
-  <p>Game Rules Reference Modal</p>
+  <p><strong>Game Rules Reference Modal</strong></p>
   <img src="/screenshots/game-rules-modal.png" alt="Game Rules Reference Modal" width="500">
 </div>
 <br>
