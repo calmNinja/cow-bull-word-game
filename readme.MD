@@ -1,6 +1,4 @@
-<div style="background-color: #B10039; padding: 10px 0; text-align: center;">
-  <h1 style="font-size: 36px; margin-bottom: 5px; color: white;">CowBull - A Word Guessing Game</h1>
-</div>
+# CowBull 
 
 <br>
 CowBull is a word guessing game built using HTML, CSS, Vanilla JavaScript, Node.js, Express, Webpack, and Babel.
@@ -18,7 +16,7 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p style="text-decoration: underline;">Main Game Page</p>
+  <p><u>Main Game Page</u></p>
   <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
 </div>
 
