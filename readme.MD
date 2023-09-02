@@ -1,5 +1,6 @@
-![Banner](/screenshots/CowBull_-_A_Word_Guessing_Game.png) 
-
+<div style="text-align: center;">
+  ![Banner](/screenshots/CowBull_-_A_Word_Guessing_Game.png) 
+</div>
 <br>
 CowBull is a word guessing game built using HTML, CSS, Vanilla JavaScript, Node.js, Express, Webpack, and Babel.
 <br>
@@ -16,7 +17,7 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p><u>Main Game Page</u></p>
+  <p>_ _Main Game Page_ _</p>
   <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
 </div>
 
