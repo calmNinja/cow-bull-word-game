@@ -9,28 +9,35 @@ CowBull is a fun word guessing game where players try to guess a secret word by 
 ## Demo
 
 <p align="center"><em>Main Game Page</em></p>
-<img src="/screenshots/home-page.png" alt="Main Game Page" width="400">
+<div align="center">
+  <img src="/screenshots/home-page.png" alt="Main Game Page" width="500">
+</div>
 
 
 <p align="center"><em>Game Options Modal</em></p>
-
-![Game Options Display](/screenshots/game-options-display.png)
+<div align="center">
+  <img src="/screenshots/game-options-display.png" alt="Game Options Modal" width="500">
+</div>
 
 <p align="center"><em>Game Guessing Grid with virtual keyboard and result display</em></p>
-
-![Guessing Grid](/screenshots/guessing-grid.png)
+<div align="center">
+  <img src="/screenshots/guessing-grid.png" alt="Game Guessing Grid with virtual keyboard and result display" width="500">
+</div>
 
 <p align="center"><em>Responsive Layout for Game Grid Page</em></p>
-
-![Responsive Layout](/screenshots/responsive-gamegrid.png)
+<div align="center">
+  <img src="/screenshots/responsive-gamegrid.png" alt="Responsive Layout for Game Grid Page" width="500">
+</div>
 
 <p align="center"><em>Game Rules Reference Modal</em></p>
-
-![Game-rules-modal](/screenshots/game-rules-modal.png)
+<div align="center">
+  <img src="/screenshots/game-rules-modal.png" alt="Game Rules Reference Modal" width="500">
+</div>
 
 <p align="center"><em>Winning Game Modal</em></p>
-
-![Gameover Winning Modal](/screenshots/game-winning-modal.png)
+<div align="center">
+  <img src="/screenshots/game-winning-modal.png" alt="Winning Game Modal" width="500">
+</div>
 
 ## Installation
 
