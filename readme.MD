@@ -9,8 +9,8 @@ CowBull is a fun word guessing game where players try to guess a secret word by 
 ## Demo
 
 <p align="center"><em>Main Game Page</em></p>
+<img src="/screenshots/home-page.png" alt="Main Game Page" width="400">
 
-![Home Page](/screenshots/home-page.png)
 
 <p align="center"><em>Game Options Modal</em></p>
 
