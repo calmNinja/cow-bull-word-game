@@ -1,4 +1,4 @@
-# CowBull 
+![Banner](/screenshots/CowBull_-_A_Word_Guessing_Game.png) 
 
 <br>
 CowBull is a word guessing game built using HTML, CSS, Vanilla JavaScript, Node.js, Express, Webpack, and Babel.
