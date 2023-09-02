@@ -1,5 +1,5 @@
 import { secret, checkWordInDictionary } from "./fetchSecret";
-import { state } from "./drawGrid";
+import { state, scrollToAddTileRow } from "./drawGrid";
 import {
   disableDeleteKey,
   disableEnterKey,
@@ -77,15 +77,6 @@ export const checkGuess = async () => {
     displayCowBullImages(cowBulls);
   }
 };
-
-function scrollToAddTileRow() {
-  const tileRowId = `tileRow-${state.currentRow + 1}`;
-  const tileRowElement = document.getElementById(tileRowId);
-
-  if (tileRowElement) {
-    tileRowElement.scrollIntoView({ behavior: "smooth" });
-  }
-}
 
 export const getCowBulls = (guess) => {
   let cows = 0;
