@@ -31,7 +31,7 @@ Here are a few screenshots from the CowBull game page:
 
 
 <div align="center">
-  <p><strong>Game Guessing Grid with virtual keyboard and result display</strong></p>
+  <p><strong>Game Guessing Grid with Virtual Keyboard and Result Display</strong></p>
   <img src="/screenshots/guessing-grid.png" alt="Game Guessing Grid with virtual keyboard and result display" width="500">
 </div>
 <br>
