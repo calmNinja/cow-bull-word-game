@@ -13,6 +13,7 @@ import {
 } from "./gameLogicUtils";
 import { wordLength, guesses } from "./gamescript";
 
+let hasScrolled = false;
 let isGameOver = false;
 
 export const checkGuess = async () => {
@@ -63,12 +64,28 @@ export const checkGuess = async () => {
     if (state.currentRow < guesses) {
       state.currentRow++;
       state.currentTile = 0;
+      if (!hasScrolled) {
+        const halfwayPoint = Math.floor(guesses / 2);
+        if (state.currentRow >= halfwayPoint) {
+          scrollToAddTileRow();
+          hasScrolled = true;
+        }
+      }
     }
 
     const cowBulls = getCowBulls(guess);
     displayCowBullImages(cowBulls);
   }
 };
+
+function scrollToAddTileRow() {
+  const tileRowId = `tileRow-${state.currentRow + 1}`;
+  const tileRowElement = document.getElementById(tileRowId);
+
+  if (tileRowElement) {
+    tileRowElement.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
 export const getCowBulls = (guess) => {
   let cows = 0;

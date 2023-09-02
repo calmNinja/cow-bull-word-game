@@ -140,8 +140,7 @@
 
 #game-container {  
    display: flex;
-   /* background-color: #d3d3d3; */
-   background-color: #7cbf7e;
+   background-color: #91ceaa;
    margin: 0 auto;
    justify-content: flex-start;
    width: 800px;
