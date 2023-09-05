@@ -9,7 +9,7 @@ export let secret;
 export const getSecret = async (wordLength) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/word?wordLength=${wordLength}`
+      `https://localhost:8000/word?wordLength=${wordLength}`
     );
     const json = await response.json();
     const isValid = await checkWordInDictionary(json);
@@ -31,7 +31,7 @@ export const getSecret = async (wordLength) => {
 export const checkWordInDictionary = async (word) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/check-dictionary/?word=${word}`
+      `https://localhost:8000/check-dictionary/?word=${word}`
     );
     const json = await response.json();
     return json.status === "valid";
